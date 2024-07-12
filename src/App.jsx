@@ -1,13 +1,15 @@
 
-import AbtUs from './components/AbtUs'
+import Navbar from './components/Navbar'
 import DocumentSolution from './components/document';
+import FileUpload from './components/FileUpload';
 
 function App() {
 
   return (
     <>
-      <AbtUs/>
+      <Navbar/>
     <DocumentSolution/>
+    <FileUpload/>
     </>
   )
 }
