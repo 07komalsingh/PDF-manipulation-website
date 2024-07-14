@@ -5,6 +5,8 @@ import FileUpload from './components/FileUpload';
 import Footer from './components/Footer';
 // import PremiumSol from './components/Premium';
 import Tools from './components/Tools'
+import PlayStore from './components/PlayStore';
+import SubsForm from './components/SubsForm';
 
 function App() {
 
@@ -15,7 +17,10 @@ function App() {
       <FileUpload />
       <Tools />
       {/* <PremiumSol /> */}
+      <PlayStore/>
+      <SubsForm/>
       <Footer />
+      
     </>
   )
 }

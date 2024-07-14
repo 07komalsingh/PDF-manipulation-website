@@ -11,10 +11,10 @@ const DocumentSolution = () => {
           </div>
         </div>
         <div className="flex justify-center ml-7  ">
-          <img src={picture} alt="Documents" className="w-full lg:h-[600px] mt-6" />
-        </div>
+          <img src={picture} alt="Documents" className="w-full lg:h-[600px] mt-6" />        </div>
       </div>
     </div>
   );
 };
+
 export default DocumentSolution;
