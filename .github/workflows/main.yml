@@ -52,7 +52,7 @@ jobs:
                   username: ${{ vars.SANDBOX_USER_92 }}
                   password: ${{ vars.SANDBOX_PWD_92 }}
                   source: '.'
-                  target: /var/www/easydocoments.com/frontend//${{ github.run_id }}
+                  target: /var/www/easydocoments.com/frontend/${{ github.run_id }}
 
             - name: Run Scripts on server
               uses: appleboy/ssh-action@v1.0.0
@@ -63,8 +63,8 @@ jobs:
                   script: |
                       echo ${{ github.run_number }} 
                       mkdir -p /var/www/easydocoments.com/frontend/${{ github.run_number }}.${{ github.run_attempt }}
-                      mv -f /var/www/easydocoments.com/frontend//html/. /var/www/easydocoments.com/frontend/${{ github.run_number }}.${{ github.run_attempt }}/
+                      mv -f /var/www/easydocoments.com/frontend/html/. /var/www/easydocoments.com/frontend/${{ github.run_number }}.${{ github.run_attempt }}/
                       cp -rf /var/www/easydocoments.com/frontend/${{ github.run_id }}/. /var/www/easydocoments.com/frontend/html/
-                      # cp -R /var/www/common/.htaccess /var/www/easydocoments.com/frontend//html/
+                      # cp -R /var/www/common/.htaccess /var/www/easydocoments.com/frontend/html/
                       sudo service apache2 restart
                       rm -r /var/www/easydocoments.com/frontend/${{ github.run_id }}
