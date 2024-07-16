@@ -1,5 +1,5 @@
 import React from 'react';
-import picture from '../../src/assets/rafiki.png'
+import picture from '../../src/assets/img_rafiki.png'
 const DocumentSolution = () => {
   return (
     <div className=" bg-white flex justify-center items-center ">

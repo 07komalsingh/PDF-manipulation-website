@@ -1,12 +1,20 @@
 import React from 'react'
+import add_page from '../assets/img_add.png'
+import img_merge from '../assets/img_merge.png'
+import img_split from '../assets/img_split.png'
+import img_recorder from '../assets/img_recorder.png'
+import img_remove from '../assets/img_remove.png'
+import img_blankPage from '../assets/img_blank_page.png'
+import img_convert from '../assets/img_convert.png'
+
 const tools = [
-    { name: 'Merge PDF', icon: "../src/assets/Merge.png" },
-    { name: 'Split PDF', icon: '../src/assets/Split.png' },
-    { name: 'Recorder PDF', icon: '../src/assets/recorder.png' },
-    { name: 'Remove Pages', icon: '../src/assets/remove.png' },
-    { name: 'Add Blank Page', icon: '../src/assets/blank_page.png' },
-    { name: 'Convert to docs', icon: '../src/assets/convert.png' },
-    { name: 'Add Pages', icon: '../src/assets/Add.png' },
+    { name: 'Merge PDF', icon: img_merge },
+    { name: 'Split PDF', icon: img_split },
+    { name: 'Recorder PDF', icon: img_recorder },
+    { name: 'Remove Pages', icon: img_remove },
+    { name: 'Add Blank Page', icon: img_blankPage },
+    { name: 'Convert to docs', icon: img_convert },
+    { name: 'Add Pages', icon: add_page },
 
 ];
 function Tools() {
@@ -20,7 +28,7 @@ function Tools() {
                 {tools.map((item, i) => (
                     <div key={i} className='bg-[#C5E7E9] rounded-2xl  flex items-center justify-center font-poppins  md:max-w-auto py-10 gap-1 w-full md:text-center  lg:w-[21vw] '>
 
-                        <img src={item.icon} className=''/>
+                        <img src={item.icon} className='' />
                         <p>{item.name}</p>
                     </div>
                 ))}

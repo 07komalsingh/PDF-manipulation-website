@@ -23,7 +23,7 @@
 
 import React from 'react';
 // import picture from '../../src/assets/rafiki.png'
-import pana from '../../src/assets/pana.png'
+import pana from '../../src/assets/img_pana.png'
 
 const PremiumSol = () => {
   return (

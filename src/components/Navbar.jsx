@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import pdfIcon from '../assets/pdf.png'; // Adjust the path as needed
+import pdfIcon from '../assets/img_pdf.png'; // Adjust the path as needed
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);

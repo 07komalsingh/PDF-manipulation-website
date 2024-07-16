@@ -1,5 +1,5 @@
 import React from 'react';
-import picture1 from '../assets/playstore.png'
+import picture1 from '../assets/img_play_store.png'
 const PlayStore = () => {
   return (
 

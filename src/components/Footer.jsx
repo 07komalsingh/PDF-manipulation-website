@@ -1,9 +1,9 @@
 
 import React from 'react'
-import facebook from '../../src/assets/fb.png'
-import twitter from '../../src/assets/twitter.png'
-import git from '../../src/assets/git1.png'
-import insta from '../../src/assets/insta.png'
+import facebook from '../assets/img_fb.png'
+import twitter from '../assets/img_twitter.png'
+import git from '../assets/img_git.png'
+import insta from '../assets/img_insta.png'
 const Footer = () => {
   return (
     <footer className="bg-[#44B7BC]  text-white py-8 mt-12">
@@ -66,3 +66,46 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+// const express = require('express');
+// const cors = require('cors');
+// const multer = require('multer');
+// const app = express();
+// const port = 8080;
+ 
+// app.use(cors()); // Enable CORS
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+ 
+// // Configure multer for file upload
+// const upload = multer({ dest: 'uploads/' });
+ 
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('No file uploaded.');
+//   }
+//   console.log(req.file);
+//   res.status(200).send({ message:'File uploaded successfully', file: req.file });
+// });
+ 
+// app.get('/upload', upload.single('file'), (req, res) => {
+//   if (!req.file) {
+//     return res.status(400).send('No file uploaded.');
+//   }
+//   console.log(req.file);
+//   res.status(200).send({ message:'File uploaded successfully', file: req.file });
+// });
+// app.post('/tool', (req, res) => {
+//   const { tool, file } = req.body;
+//   if (!tool || !file) {
+//     return res.status(400).send('Tool or file not provided.');
+//   }
+//   console.log(`Tool: ${tool}, File: ${file}`);
+//   res.status(200).send({ message: `Tool ${tool} applied successfully` });
+// });
+ 
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });
+//  explain each line
