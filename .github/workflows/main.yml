@@ -68,3 +68,10 @@ jobs:
                       # cp -R /var/www/common/.htaccess /var/www/easydocoments.com/frontend/html/
                       sudo service apache2 restart
                       rm -r /var/www/easydocoments.com/frontend/${{ github.run_id }}
+
+            - name: Delete artifact
+              uses: Remagpie/gha-remove-artifact@v1
+              with:
+                 GITHUB_TOKEN: ${{ secrets.TOKEN }} 
+                 only-name: 'node-app'
+                 max-count: 1
