@@ -73,6 +73,7 @@ const FileUpload = () => {
         {uploadMessage && <p className="mt-4 text-red-600">{uploadMessage}</p>}
       </div>
     </div>
+    
   );
 };
 
