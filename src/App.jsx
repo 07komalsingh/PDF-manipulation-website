@@ -1,75 +1,26 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar'
-import DocumentSolution from './components/document';
-import FileUpload from './components/FileUpload';
-import Footer from './components/Footer';
-import PremiumSol from './components/Premium';
-import Tools from './components/Tools'
-import PlayStore from './components/PlayStore';
-import SubsForm from './components/SubsForm';
 import SplitPage from './components/SplitPage';
+import MergePDF from './components/Mergepdf';
+import MainLayout from './components/MainLayout';
 
-function App() {
-
+ function App() {
   return (
-    <>
-      <Navbar />
-      <DocumentSolution />
-      <FileUpload />
-      <PremiumSol />
-       <Tools/>
-      <Router>
-            <Routes>
-                {/* <Route path="/" element={<Tools />} /> */}
-                <Route path="/split" element={<SplitPage />} />
-                {/* Add other routes here if needed */}
-            </Routes>
-        </Router>
-      <PlayStore/>
-      <SubsForm/>
-       
-     
-     
-        <Footer />
-    </>
-  )
+    <Router>
+      <Routes>
+      <Route path="/" element={<MainLayout />} />
+      <Route path="/split" element={<SplitPage />} />
+      <Route path="/merge-pdf" element={<MergePDF/>}/>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+    </Router>
+    
+  );
 }
 
-export default App
 
 
+function NotFound() {
+  return <h2>Page not found</h2>;
+}
 
-// import React from 'react';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Navbar from './components/Navbar';
-// import DocumentSolution from './components/DocumentSolution';
-// import FileUpload from './components/FileUpload';
-// import Footer from './components/Footer';
-// import PremiumSol from './components/PremiumSol';
-// import Tools from './components/Tools';
-// import PlayStore from './components/PlayStore';
-// import SubsForm from './components/SubsForm';
-// import SplitPage from './components/SplitPage';
-
-// function App() {
-//   return (
-//     <Router>
-//       <Navbar />
-//       <DocumentSolution />
-//       <FileUpload />
-//       <PremiumSol />
-//       <Tools />
-      
-//       <Routes>
-//         <Route path="/split" element={<SplitPage />} />
-//         {/* Add other routes here if needed */}
-//       </Routes>
-      
-//       <PlayStore />
-//       <SubsForm />
-//       <Footer />
-//     </Router>
-//   );
-// }
-
-// export default App;
+export default App;
