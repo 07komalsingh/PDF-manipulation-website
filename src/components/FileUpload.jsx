@@ -40,11 +40,11 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen px-2 sm:px-0 ">
       <h2 className="text-2xl font-semibold mb-6 font-poppins">Upload Document</h2>
       <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl p-8 md:lg:w-[87%] 2xl:w-[60%] h-[31rem] flex justify-center items-center">
         <div>
-          <h1 className="flex flex-col text-[#060808] justify-center font-poppins items-center mb-8 text-2xl font-semibold mt-7">
+          <h1 className=" text-[#060808] font-poppins mb-8 text-2xl font-semibold mt-7 text-center">
             Upload PDF Attachments
           </h1>
           <div className="flex flex-col items-center">

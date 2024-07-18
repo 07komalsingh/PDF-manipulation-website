@@ -36,20 +36,10 @@ function Tools() {
         </div>
 
 
-        //     <div className=''>
-        //         <h2 className='font-poppins font-bold place-items-center flex justify-center  text-black lg:text-4xl  text-2xl  m-8'>Our popular Tools </h2>
-        //         <div className=' bg-[#E5F2F3] place-items-center gap-4 grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2 w-full mt-9 py-4 px-2 sm:px-0  '>
-
-        //             {tools.map((item, i) => (
-        //                 <div key={i} className='bg-[#C5E7E9] border-2 rounded-2xl  flex items-center justify-center font-poppins px-6 md:max-w-lg py-10 gap-4 w-full  md:w-[30vw] '>
-
-        //                         <img src={item.icon} className='' />
-        //                         <p>{item.name}</p>
-        //                 </div>
-        //             ))}
-
-        //         </div>
-        //     </div>
+       
     );
 }
 export default Tools
+
+
+
