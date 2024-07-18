@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import pdfIcon from '../assets/img_pdf.png'; // Adjust the path as needed
+import pdfIcon from '../assets/img_pdf.png'; 
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,11 +16,11 @@ const Navbar = () => {
                     <img src={pdfIcon} alt="PDF Icon" className="w-20 h-26" />
                 </div>
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold "> 
-                    <a href="#merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</a> 
-                    <a href="#split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</a> 
-                    <a href="#compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</a> 
-                    <a href="#convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</a>
-                    <a href="#all-tools" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</a> 
+                    <Link to="merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link> 
+                    <Link to="split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link> 
+                    <Link to="compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link> 
+                    <Link to="convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
+                    <Link to="all-tools" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</Link> 
                 </div>
                 <div className="md:hidden flex items-center justify-end ">
                     <button onClick={toggleMenu} className="outline-none mobile-menu-button">
