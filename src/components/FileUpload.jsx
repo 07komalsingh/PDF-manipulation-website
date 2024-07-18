@@ -9,7 +9,7 @@ const FileUpload = () => {
 
   const onFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-    setUploadMessage('');  // Clear any previous messages
+    setUploadMessage('');  
   };
 
   const onFileUpload = async () => {
