@@ -2,7 +2,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import SplitPage from './components/SplitPage';
-import MergePDF from './components/MergePDF';
+import MergePDF from './components/Mergepdf';
+import PageNotFound from './components/PageNotFound';
 
  function App() {
   return (
@@ -10,8 +11,8 @@ import MergePDF from './components/MergePDF';
       <Routes>
       <Route path="/" element={<MainLayout />} />
       <Route path="/split" element={<SplitPage />} />
-      <Route path="/merge-pdf" element={<MergePDF/>}/>
-      {/* <Route path="*" element={<NotFound />} /> */}
+      <Route path="/merge" element={<MergePDF/>}/>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
     </Router>
     
