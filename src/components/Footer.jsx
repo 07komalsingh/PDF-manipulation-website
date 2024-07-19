@@ -52,8 +52,8 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-center mt-8">
-          <p className="text-sm font-Poppins">
-            &copy; copyright {new Date().getFullYear()}, All Rights Reserved by Panda Consultant Software
+          <p className="text-sm font-Poppins font-normal">
+            &copy; copyright {new Date().getFullYear()}, All Rights Reserved by Pando india software Consultants
           </p>
         </div>
       </div>

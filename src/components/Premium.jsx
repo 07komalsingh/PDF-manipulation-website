@@ -35,7 +35,7 @@ const PremiumSol = () => {
             <button className="bg-[#44B7BC] font-poppins  font-semibold  text-white py-2 px-8 rounded-full hover:bg-[#30aab1] my-6">Get Now</button>
           </div>
         </div>
-        <div className="flex justify-center m-8 lg:m-20 md:m-14">
+        <div className="flex justify-center m-4 lg:m-20 md:m-12">
           <img src={pana} alt="Documents" className="w-full "/>
         </div>
       </div>
