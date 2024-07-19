@@ -60,7 +60,7 @@ const FileUpload = () => {
             <div className='mt-9'>
               <button
                 onClick={onChooseFileClick}
-                className="bg-[#44B7BC] hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mb-4"
+                className="bg-[#44B7BC] hover:bg-[#30aab1]  text-white font-semibold py-2 px-4 rounded mb-4"
               >
                 Choose Files
               </button>

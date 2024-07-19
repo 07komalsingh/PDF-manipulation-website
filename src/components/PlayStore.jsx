@@ -17,7 +17,7 @@ const PlayStore = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </p>
           </div>
-          <button className="bg-[#44B7BC] hover:bg-blue-600 text-white font-semibold py-2 px-11 rounded-full ">
+          <button className="bg-[#44B7BC] hover:bg-[#30aab1]  text-white font-semibold py-2 px-11 rounded-full ">
             Download Now
           </button>
         </div>
