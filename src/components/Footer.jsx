@@ -3,7 +3,10 @@ import React from 'react'
 import twitter from '../../src/assets/img_twiter.svg'
 import facebook from '../../src/assets/img_fb.svg'
 import git from '../../src/assets/img_git.svg'
+import linkdin from '../assets/link.png'
+import xtwitter from '../assets/xt_img.png'
 import { BiLogoInstagramAlt } from 'react-icons/bi'
+import { TiSocialLinkedinCircular } from "react-icons/ti";
 const Footer = () => {
 
   return (
@@ -44,7 +47,11 @@ const Footer = () => {
                 <span className="rounded-full bg-white text-[#44B7BC]  p-1 text-center  flex items-center">
                   <BiLogoInstagramAlt className='text-[23px]'  />
                 </span> 
-                <img src={git} alt="Documents" className="rounded-full p-1 hover:text-gray-300 " />
+                {/* <img src={git} alt="Documents" className="rounded-full p-1 hover:text-gray-300 " /> */}
+                <span className="rounded-full bg-white text-[#44B7BC]  p-1 text-center  flex items-center">
+                  <TiSocialLinkedinCircular className='text-[23px]'  />
+                </span> 
+                <img src={xtwitter} alt="Documents" className="rounded-full p-1  " />
                 {/* <a href="#" className="rounded-full p-1 bg-black hover:text-gray-300"                   </a              {/* <a href="#" className=""             <img src={git} alt="Documents" className="rounded-full p-1 bg-black hover:text-gray-300 " />                 <i className="fab fa-github"></i> 
                </a>  */} 
               </li>
