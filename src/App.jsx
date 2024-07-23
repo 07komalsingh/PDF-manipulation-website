@@ -4,7 +4,11 @@ import MainLayout from './components/MainLayout';
 import SplitPage from './components/SplitPage';
 import MergePDF from './components/Mergepdf';
 import PageNotFound from './components/PageNotFound';
+
 import RemovePages from './components/RemovePages';
+
+import PdfToDocs from './components/PdfToDocs';
+
 
  function App() {
   return (
@@ -14,7 +18,9 @@ import RemovePages from './components/RemovePages';
       <Route path="/split" element={<SplitPage />} />
       <Route path="/merge" element={<MergePDF/>}/>
       <Route path="/remove" element={<RemovePages/>}/>
+      <Route path="/convert" element={<PdfToDocs />} />
       <Route path="*" element={<PageNotFound />} />
+      
     </Routes>
     </Router>
     
