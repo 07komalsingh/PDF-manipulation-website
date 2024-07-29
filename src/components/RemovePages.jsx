@@ -115,7 +115,7 @@
  
 import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
-import download from 'downloadjs';
+// import download from 'downloadjs';
  
 function RemovePages() {
   const [selectedFile, setSelectedFile] = useState(null);
