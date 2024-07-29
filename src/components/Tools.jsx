@@ -22,9 +22,11 @@ const tools = [
 
 function Tools() {
     return (
-        <div className="container mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-8 text-center">Our popular Tools</h2>
-            <div className="grid bg-[#E5F2F33D] gap-8 md:grid-cols-3 sm:grid-cols-1 place-items-center">
+        <div className='w-full mt-14'>
+            <h2 className='font-poppins font-bold place-items-center flex justify-center  text-black lg:text-4xl  text-2xl  m-3 md:m-8'>Our popular Tools </h2>
+
+            <div className="grid bg-[#E5F2F33D] 2xl:px-[300px] lg:px-44  py-10 sm:gap-28 gap-7 lg:grid-cols-3 md:grid-cols-3 md:text-center sm:grid-cols-1 place-items-center sm:px-6 md:gap-2  px-4">
+
                 {tools.map((item, i) => (
                     <Link
                         key={i}

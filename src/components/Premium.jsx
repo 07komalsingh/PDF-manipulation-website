@@ -1,12 +1,12 @@
 
 
 import React from 'react';
-// import picture from '../../src/assets/rafiki.png'
+
 import pana from '../../src/assets/img_pana.png'
 
 const PremiumSol = () => {
   return (
-    <div className=" bg-[#E5F2F33D] flex justify-center items-center mt-6 ">
+    <div className=" bg-[#E5F2F33D] flex justify-center items-center mt-6 mb-12 ">
       <div className="flex lg:flex-row flex-col-reverse lg:ml-10">
         <div className=" flex flex-col justify-center items-center sm:gap-0 ">
           <div className="mt-5 font-Poppins lg:w-[500px] w-full text-center lg:text-start sm:p-5 p-4">
@@ -14,7 +14,7 @@ const PremiumSol = () => {
             <button className="bg-[#44B7BC] font-poppins  font-semibold  text-white py-2 px-8 rounded-full hover:bg-[#30aab1] my-6">Get Now</button>
           </div>
         </div>
-        <div className="flex justify-center m-4 lg:m-20 md:m-12">
+        <div className="flex justify-center m-9 lg:m-20 md:m-12">
           <img src={pana} alt="Documents" className="w-full "/>
         </div>
       </div>
