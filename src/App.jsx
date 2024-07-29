@@ -1,6 +1,6 @@
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar'
+
 import MainLayout from './components/MainLayout';
 
 import MergePDF from './components/Mergepdf';
@@ -14,7 +14,7 @@ import RemovePages from './components/RemovePages';
 import Footer from './components/Footer';
 import PdfToDocs from './components/PdfToDocs';
 import FileUpload from './components/FileUpload';
-import Footer from './components/Footer';
+
 
 function App() {
   let splitprops='split page'
@@ -25,7 +25,7 @@ function App() {
 
       <Routes>
       <Route path="/" element={<MainLayout />} />
-      <Route path="/split" element={<SplitPage />} />
+      <Route path="/split" element={<FileUpload />} />
       <Route path="/merge" element={<MergePDF/>}/>
 
       <Route path="/remove" element={<RemovePages/>}/>
