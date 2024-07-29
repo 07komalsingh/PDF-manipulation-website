@@ -1,7 +1,8 @@
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar'
 import MainLayout from './components/MainLayout';
-import SplitPage from './components/SplitPage';
+
 import MergePDF from './components/Mergepdf';
 
 
@@ -10,12 +11,14 @@ import Navbar from './components/Navbar'
 import PageNotFound from './components/PageNotFound';
 
 import RemovePages from './components/RemovePages';
-
+import Footer from './components/Footer';
 import PdfToDocs from './components/PdfToDocs';
+import FileUpload from './components/FileUpload';
 import Footer from './components/Footer';
 
+function App() {
+  let splitprops='split page'
 
- function App() {
   return (
     <Router>
        <Navbar/>
@@ -32,8 +35,7 @@ import Footer from './components/Footer';
     </Routes>
     <Footer />
     </Router>
-    
   );
 }
 
-  export default App;
+export default App;

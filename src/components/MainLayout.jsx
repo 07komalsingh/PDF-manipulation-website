@@ -7,22 +7,15 @@ import DocumentSolution from './document';
 import PremiumSol from './Premium';
 import Tools from './Tools'
 import PlayStore from './PlayStore'; 
-
-
-
 function MainLayout() {
-      return (
-        <>
-          {/* <Navbar/> */}
-          <DocumentSolution />
-      
-          <Tools />
-          <PlayStore />
-          {/* <SubsForm/> */}
-          <PremiumSol />
-          {/* <Footer /> */}
-        </>
-      );
-    }
+  return (
+    <>
+      <DocumentSolution />     
+      <Tools />
+      <PlayStore />
+      <PremiumSol />     
+    </>
+  );
+}
 
-    export default MainLayout;
+export default MainLayout;
