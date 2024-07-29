@@ -1,7 +1,6 @@
 
 
 import React from 'react';
-
 import { Link } from 'react-router-dom';
 import add_page from '../assets/img_add.png';
 import img_merge from '../assets/img_merge.png';
@@ -19,28 +18,22 @@ const tools = [
     { name: 'Add Blank Page', icon: img_blankPage, path: '/add_blank' },
     { name: 'Pdf to docs', icon: img_convert, path: '/convert' },
     { name: 'Add Image', icon: add_page, path: '/add-image' },
-
 ];
 
 function Tools() {
-
-
     return (
-        <div>
-            <h2 className='font-poppins font-bold place-items-center flex justify-center  text-black lg:text-4xl  text-2xl  m-8'>Our popular Tools </h2>
-
-            <div className="grid bg-[#E5F2F33D] 2xl:px-80 lg:px-44  py-10 sm:gap-28 gap-7 lg:grid-cols-3 md:grid-cols-3 md:text-center sm:grid-cols-1 place-items-center sm:px-6 md:gap-2  px-4">
-
+        <div className="container mx-auto p-4">
+            <h2 className="text-2xl font-bold mb-8 text-center">Our popular Tools</h2>
+            <div className="grid bg-[#E5F2F33D] gap-8 md:grid-cols-3 sm:grid-cols-1 place-items-center">
                 {tools.map((item, i) => (
                     <Link
                         key={i}
                         to={item.path}
-                         className='bg-[#C5E7E9] rounded-2xl  flex items-center justify-center font-poppins  md:max-w-auto py-10 gap-1 w-full md:text-center  lg:w-[21vw] '>
-
-                        <img src={item.icon} className='' />
-                        <p className='font-semibold'>{item.name}</p>
+                        className="bg-[#C5E7E9] rounded-2xl flex flex-col items-center justify-center p-6 w-full max-w-sm text-center"
+                    >
+                        <img src={item.icon} className="mb-4" alt={item.name} />
+                        <p className="font-semibold">{item.name}</p>
                     </Link>
-
                 ))}
             </div>
         </div>
