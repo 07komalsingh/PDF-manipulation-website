@@ -1,49 +1,114 @@
 
-import React, { useState } from 'react';
+
+
+
+
+import React, { useState, useRef } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { PDFDocument } from 'pdf-lib';
+import Uploading from './Adding'
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+
+// Set up pdfjs worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const MergePDF = () => {
-    const [mergedPdfUrl, setMergedPdfUrl] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [fileURLs, setFileURLs] = useState([]);
+  const [mergedPDFUrl, setMergedPDFUrl] = useState(null);
+  const [initialFilesChosen, setInitialFilesChosen] = useState(false); // Track if initial files are chosen
+  const fileInputRef = useRef(null);
 
-    const mergePDFs = async (files) => {
-        const mergedPdf = await PDFDocument.create();
-        for (const file of files) {
-            const existingPdfBytes = await file.arrayBuffer();
-            const pdfDoc = await PDFDocument.load(existingPdfBytes);
-            const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
-            copiedPages.forEach((page) => mergedPdf.addPage(page));
-        }
-        const mergedPdfFile = await mergedPdf.save();
-        const url = URL.createObjectURL(new Blob([mergedPdfFile], { type: 'application/pdf' }));
-        setMergedPdfUrl(url);
-    };
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
 
-    const handleFileChange = (e) => {
-        const files = e.target.files;
-        mergePDFs(files);
-    };
+    // Append new files to existing ones
+    setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
 
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="font-poppins font-medium text-black lg:text-4xl text-2xl mb-8">Merge PDF Files</h1>
-            <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-            <input
-             type="file"  multiple 
-            onChange={handleFileChange} 
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mb-4" 
-            />
-            {mergedPdfUrl && (
-                <a href={mergedPdfUrl} download="merged.pdf" className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-                    Download Merged PDF
+    // Create new URLs for the newly selected files
+    const newUrls = files.map((file) => URL.createObjectURL(file));
+    setFileURLs((prevUrls) => [...prevUrls, ...newUrls]);
 
-                </a>
-            )}
-            </div>
-        </div>
-    );
-    };
- 
+    // Set initial files chosen to true
+    setInitialFilesChosen(true);
+  };
+
+  // Trigger file input click
+  const handleAddFiles = () => {
+    fileInputRef.current.click();
+  };
 
 
+  return (
+    <div className="flex flex-col items-center justify-center bg-[#F5F5F5]">
+      {/* <h2 className="font-poppins font-bold text-black text-2xl m-8">Select PDFs to Merge</h2> */}
+      
+      {/* Hidden file input */}
+      {/* <input
+        type="file"
+        accept="application/pdf"
+        multiple
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        className="hidden"
+      /> */}
+      
+      {/* Button to open file picker */}
+      {/* {!initialFilesChosen && (
+        <button
+          className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-4 rounded-full mt-4"
+          onClick={handleAddFiles}
+        >
+          Choose Files
+        </button>
+      )} */}
 
-    export default MergePDF;
+      {/* Button to add more files */}
+      {/* {initialFilesChosen && (
+        <button
+          className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-4 rounded-full mt-4"
+          onClick={handleAddFiles}
+        >
+          + Add More Files
+        </button>
+      )}
+       */}
+      <div className="">
+        {selectedFiles.length > 0 ? (
+          <div>
+            {/* <h3 className="font-poppins font-semibold text-xl mb-4">Selected Files:</h3>
+            <ul>
+              {selectedFiles.map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul> */}
+            {/* <div className="mt-8">
+              <h3 className="font-poppins font-semibold text-xl mb-4">Preview First Page of Selected PDFs:</h3>
+              
+            </div> */}
+            {/* <button
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4"
+              onClick={handleMerge}
+            >
+              Merge Files
+            </button> */}
+            {/* {mergedPDFUrl && (
+             
+            )} */}
+          </div>
+         ) : (<div >
+          <Uploading/>
+          
+
+
+         </div>)}
+      </div>
+    </div>
+  );
+};
+
+export default MergePDF;
+
+

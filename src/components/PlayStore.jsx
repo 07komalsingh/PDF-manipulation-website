@@ -15,11 +15,9 @@ const PlayStore = () => {
           </h2>
           <div className='lg:w-[30vw]'>
             <p className="text-black text-2xl mt-[3rem] mb-[3rem] leading-9 font-Poppins font-semibold">
-              Download Easy Documents on the Play Store! We're excited to launch Easy Documents, our new app for seamless document management. Get it now on the Play Store and stay organized effortlessly.
+            Easy Documents App: Available on Play Store Manage your documents effortlessly with Easy Documents. Download it now from the Play Store!
             </p>
-            <p className="text-black text-2xl mt-[3rem] mb-[3rem] leading-9 font-Poppins font-semibold">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+         
             <button className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full">
               Download Now
             </button>
