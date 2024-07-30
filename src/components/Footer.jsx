@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
         <div className="text-center mt-8">
           <p className="text-sm font-Poppins font-normal">
-            &copy; copyright {new Date().getFullYear()}, All Rights Reserved by Pando india software Consultants
+            &copy; copyright {new Date().getFullYear()}, All Rights Reserved by Pando India Software Consultants
           </p>
         </div>
       </div>

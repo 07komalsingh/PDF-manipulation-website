@@ -1,8 +1,4 @@
 
-
-
-
-
 import React, { useState, useRef } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { PDFDocument } from 'pdf-lib';
