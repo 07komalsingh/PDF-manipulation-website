@@ -29,7 +29,7 @@ const FileUpload = (props) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-16 pb-14">
+    <div className="flex flex-col items-center justify-center">
       {!selectedFile ? (
         <div className="mb-4">
           <h2 className="text-4xl font-semibold mb-24 text-center">{props.name}</h2>
@@ -66,7 +66,7 @@ const FileUpload = (props) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col w-full items-center justify-center mb-3">
+        <div className="flex flex-col w-full items-center justify-center">
           {<SplitPage/>}
         </div>
       )}

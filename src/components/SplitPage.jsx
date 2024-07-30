@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 import { PDFDocument } from "pdf-lib";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { FaCirclePlus } from "react-icons/fa6";
@@ -11,12 +11,20 @@ import rangeImg from '../assets/range.svg';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const SplitPage = () => {
+  const navigate = useNavigate();
   const { state } = useLocation(); // Access state passed via useNavigate
   const [numPages, setNumPages] = useState(null);
-  const [file, setFile] = useState(state.file);
+  const [file, setFile] = useState(state?.file || null);
   const [ranges, setRanges] = useState([{ from: 1, to: 2 }]);
   const [downloadUrl, setDownloadUrl] = useState(null);
   const inputRef = useRef();
+
+  useEffect(() => {
+    if (!file) {
+      // Redirect to a different page or show an error message if no file is provided
+      navigate('/');
+    }
+  }, [file, navigate]);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -56,16 +64,16 @@ const SplitPage = () => {
   };
 
   return (
-    <div className="py-10 px-4 mb-30 font-Poppins w-full bg-[#f5f5f5]">
+    <div className="py-10 px-4 mb-30 font-Poppins w-full bg-[#f5f5f5] flex justify-center">
       <div className="flex flex-col">
         {/* PDF Preview Section */}
         <div className="p-4 flex justify-center">
           {file && (
-            <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+            <Document file={file} onLoadSuccess={onDocumentLoadSuccess}  className="text-center">
               {Array.from(new Array(numPages), (el, index) => (
                 <div
                   key={`page_${index + 1}`}
-                  className="rounded-3xl bg-white border-white  p-2 inline-block justify-center items-center "
+                  className="rounded-xl bg-white border-2 border-white  p-2 inline-block justify-center items-center shadow "
                   style={{ width: "200px", height: "300px", margin: "10px" }}
                 >
                   <Page pageNumber={index + 1} width={180} />
@@ -79,16 +87,16 @@ const SplitPage = () => {
         <div className="p-4 font-Poppins flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold mb-4 ">Split PDF</h2>
           <hr className="w-[20%] mt-2" />
-          <label className="font-semibold mt-6 mb-6">
+          <label className="font-semibold mt-6 mb-6 text-center ">
             Effortless PDF Splitting for Enhanced Workflow
           </label>
           {ranges.map((range, index) => (
-            <div key={index} className="mb-4 flex gap-4 items-center">
+            <div key={index} className="mb-4 flex flex-col md:flex-row gap-4 items-center">
               <div className="flex justify-center items-center gap-1">
                 <img src={rangeImg} alt="" className="h-5 w-5" />
                 <p className="block font-Poppins">Range {index + 1}</p>
               </div>
-              <div className="flex items-center border-2 border-[#44B7BC] rounded-xl p-2">
+              <div className="flex items-center border-2 border-[#44B7BC] rounded-xl p-2 w-[230px] sm:w-fit">
                 <span className="mr-2">From Page</span>
                 <hr className="rotate-90 border-[1px] border-[#44B7BC] w-[60px]" />
                 <input
@@ -97,13 +105,13 @@ const SplitPage = () => {
                   onChange={(e) =>
                     handleRangeChange(index, "from", parseInt(e.target.value))
                   }
-                  className="border-none p-2 w-16 text-center"
+                  className="border-none p-2 w-16 text-center bg-[#F5F5F5]"
                   min="1"
                   max={numPages}
                 />
               </div>
 
-              <div className="flex items-center border-2 border-[#44B7BC] rounded-xl p-2">
+              <div className="flex items-center border-2 border-[#44B7BC] rounded-xl p-2 w-[230px] sm:w-fit">
                 <span className="mr-2">to</span>
                 <hr className="rotate-90 border-[1px] border-[#44B7BC] w-[60px]" />
                 <input
@@ -112,12 +120,12 @@ const SplitPage = () => {
                   onChange={(e) =>
                     handleRangeChange(index, "to", parseInt(e.target.value))
                   }
-                  className="border-none p-2 w-16 text-center"
+                  className="border-none p-2 w-16 text-center bg-[#F5F5F5]"
                   min="1"
                   max={numPages}
                 />
               </div>
-              <div className="flex gap-2 justify-center items-center py-4 px-6 rounded-xl border-2 border-[#44B7BC] text-[#44B7BC]">
+              <div className="flex gap-2 justify-center items-center py-4 px-6 rounded-xl border-2 border-[#44B7BC] text-[#44B7BC] w-[230px] sm:w-fit">
                 <FaCirclePlus />
                 <button onClick={addRange} className="font-semibold">
                   Add Range
@@ -128,7 +136,7 @@ const SplitPage = () => {
 
           <button
             onClick={splitPDF}
-            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4"
+            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4 w-[230px] sm:w-fit"
           >
             Split to PDF
           </button>
@@ -137,7 +145,7 @@ const SplitPage = () => {
             <a
               href={downloadUrl}
               download="split.pdf"
-              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4"
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4 w-[230px] sm:w-fit"
             >
               Download Split PDF
             </a>
@@ -149,6 +157,4 @@ const SplitPage = () => {
 };
 
 export default SplitPage;
- 
-
 
