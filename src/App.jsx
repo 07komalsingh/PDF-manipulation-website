@@ -9,7 +9,8 @@ import RemovePages from './components/RemovePages';
 
 import PdfToDocs from './components/PdfToDocs';
 import FileUpload from './components/FileUpload';
-
+import Footer from "./components/Footer"
+// import AddBlankPage from './components/Add_Blank';
 
 function App() {
   let splitprops='split page'
@@ -23,7 +24,9 @@ function App() {
       <Route path="/merge" element={<MergePDF/>}/>
       <Route path="/remove" element={<RemovePages/>}/>
       <Route path="/convert" element={<PdfToDocs />} />
-      <Route path="*" element={<PageNotFound />} />   
+      {/* <Route path="/add_blank" element = {<AddBlankPage/>}/> */}
+      <Route path="*" element={<PageNotFound />} />
+      
     </Routes>
     <Footer />
     </Router>
