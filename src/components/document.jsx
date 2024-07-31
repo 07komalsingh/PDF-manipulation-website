@@ -7,7 +7,7 @@ const DocumentSolution = () => {
         <div className=" flex flex-col justify-center items-center">
           <div className="mt-5 font-Poppins lg:w-[500px] w-full text-center lg:text-start p-3">
             <h2 className="md:text-[36px] text-2xl leading-10 font-poppins font-semibold lg:line-clamp-3 lg:leading-normal">{`Your one step Solution for all Documents Need 100% Free & Effortless`}</h2>
-            <button className="bg-[#44B7BC] font-poppins  font-semibold  text-white py-3 px-8 rounded-full hover:bg-[#30aab1] my-11">Know More</button>
+            <button className="bg-[#44B7BC] font-poppins  font-semibold  text-white py-3 px-8 rounded-full hover:bg-[#30aab1] sm:my-11 my-7">Know More</button>
           </div>
         </div>
         <div className="flex justify-center ml-7  ">

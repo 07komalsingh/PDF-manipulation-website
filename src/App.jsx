@@ -18,6 +18,7 @@ function App() {
   return (
     <Router>
        <Navbar/>
+    
       <Routes>
       <Route path="/" element={<MainLayout />} />
       <Route path="/split" element={<FileUpload name={splitprops}/>} />
@@ -29,6 +30,7 @@ function App() {
       
     </Routes>
     <Footer />
+   
     </Router>
   );
 }
