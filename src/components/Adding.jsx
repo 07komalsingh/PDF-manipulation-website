@@ -1,4 +1,5 @@
 
+
 import React, { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { PDFDocument } from "pdf-lib";
@@ -12,7 +13,16 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
  
 // Set up pdfjs worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
- 
+
+toastr.options = {
+
+  closeButton: true,
+  progressBar: true,
+  timeOut: "3000",
+  extendedTimeOut: "1000",
+  preventDuplicates: true,
+  newestOnTop: true,
+};
 const Adding = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [fileURLs, setFileURLs] = useState([]);
@@ -105,7 +115,7 @@ const Adding = () => {
           </div>
           <div className="flex items-center sm:mt-4">
             <button
-              className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full sm:mr-4 ${
+              className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full ${
                 selectedFiles.length < 2 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={handleMerge}
@@ -117,7 +127,7 @@ const Adding = () => {
           {mergedPDFUrl && (
             <a
               href={mergedPDFUrl}
-              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-20 rounded-full mt-4"
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[82px] px-20 rounded-full mt-4"
               download="merged.pdf"
             >
               Download PDF
