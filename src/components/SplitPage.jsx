@@ -12,16 +12,19 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const SplitPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation(); // Access state passed via useNavigate
+  const { state } = useLocation();
   const [numPages, setNumPages] = useState(null);
   const [file, setFile] = useState(state?.file || null);
   const [ranges, setRanges] = useState([{ from: 1, to: 2 }]);
   const [downloadUrl, setDownloadUrl] = useState(null);
-  const inputRef = useRef();
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     if (!file) {
-      // Redirect to a different page or show an error message if no file is provided
       navigate('/');
     }
   }, [file, navigate]);
@@ -33,6 +36,14 @@ const SplitPage = () => {
   const handleRangeChange = (index, field, value) => {
     const newRanges = [...ranges];
     newRanges[index][field] = value;
+
+    // Validation logic
+    if (newRanges[index].from < 1 || newRanges[index].to > numPages || newRanges[index].from > newRanges[index].to) {
+      setError(`Invalid range for Range ${index + 1}: Please enter a valid range.`);
+    } else {
+      setError('');
+    }
+
     setRanges(newRanges);
   };
 
@@ -41,7 +52,7 @@ const SplitPage = () => {
   };
 
   const splitPDF = async () => {
-    if (!file) return;
+    if (!file || numPages === 1) return;
 
     const reader = new FileReader();
     reader.onload = async () => {
@@ -69,11 +80,11 @@ const SplitPage = () => {
         {/* PDF Preview Section */}
         <div className="p-4 flex justify-center">
           {file && (
-            <Document file={file} onLoadSuccess={onDocumentLoadSuccess}  className="text-center">
-              {Array.from(new Array(numPages), (el, index) => (
+            <Document file={file} onLoadSuccess={onDocumentLoadSuccess} className="text-center">
+              {numPages > 1 && Array.from(new Array(numPages), (el, index) => (
                 <div
                   key={`page_${index + 1}`}
-                  className="rounded-xl bg-white border-2 border-white  p-2 inline-block justify-center items-center shadow "
+                  className="rounded-xl bg-white border-2 border-white p-2 inline-block justify-center items-center shadow"
                   style={{ width: "200px", height: "300px", margin: "10px" }}
                 >
                   <Page pageNumber={index + 1} width={180} />
@@ -85,9 +96,9 @@ const SplitPage = () => {
 
         {/* Split PDF Options Section */}
         <div className="p-4 font-Poppins flex flex-col items-center justify-center">
-          <h2 className="text-3xl font-bold mb-4 ">Split PDF</h2>
+          <h2 className="text-3xl font-bold mb-4">Split PDF</h2>
           <hr className="w-[20%] mt-2" />
-          <label className="font-semibold mt-6 mb-6 text-center ">
+          <label className="font-semibold mt-6 mb-6 text-center">
             Effortless PDF Splitting for Enhanced Workflow
           </label>
           {ranges.map((range, index) => (
@@ -134,9 +145,14 @@ const SplitPage = () => {
             </div>
           ))}
 
+          {error && (
+            <div className="text-red-600 font-semibold mt-4">{error}</div>
+          )}
+
           <button
             onClick={splitPDF}
             className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4 w-[230px] sm:w-fit"
+            disabled={!!error} // Disable the button if there's an error
           >
             Split to PDF
           </button>
@@ -157,4 +173,3 @@ const SplitPage = () => {
 };
 
 export default SplitPage;
-

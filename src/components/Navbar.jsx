@@ -9,6 +9,10 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
+    const tgl = () => {
+        setIsOpen(false)
+    }
+
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
             <div className="container lg:justify-around justify-between flex items-center px-6 space-x-6 lg:w-[100vw]">
@@ -16,7 +20,7 @@ const Navbar = () => {
                     <img src={pdfIcon} alt="PDF Icon" className="w-20 h-26" />
                 </div>
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold">
-                    <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link>
+                    <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg" >Merge PDF</Link>
                     <Link to="/split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link>
                     <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
                     <Link to="/convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
@@ -41,11 +45,11 @@ const Navbar = () => {
             </div>
             {isOpen && (
                 <div className="md:hidden">
-                    <Link to="/merge" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link>
-                    <Link to="/split" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link>
-                    <Link to="/compress" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
-                    <Link to="/convert" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
-                    <Link to="/all-tools" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</Link>
+                    <Link to="/merge" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg " onClick={toggleMenu}>Merge PDF</Link>
+                    <Link to="/split" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Split PDF</Link>
+                    <Link to="/compress" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Compress PDF</Link>
+                    <Link to="/convert" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}> Convert PDF</Link>
+                    <Link to="/all-tools" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>All PDF Tools</Link>
                 </div>
             )}
         </div>
