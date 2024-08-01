@@ -42,7 +42,7 @@ const FileInput = ({ onFilesSelected, useIcon }) => {
     }
 
     if (protectedFiles.length > 0) {
-      alert('file are password-protected and cannot be uploaded.');
+      alert('Protected files cannot be uploaded.');
       event.target.value = null; // Reset file input
       return;
     }
@@ -69,7 +69,7 @@ const FileInput = ({ onFilesSelected, useIcon }) => {
       />
       <button
         onClick={onChooseFileClick}
-        className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-3 px-3 sm:mt-6 flex items-center ${useIcon ? 'text-4xl p-4 rounded-full' : 'rounded'}`}
+        className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-3 px-3 sm:mt-6 mt-5 flex items-center ${useIcon ? 'text-4xl p-4 rounded-full' : 'rounded'}`}
       >
         {useIcon ? <GoPlus /> : 'Choose Files'}
       </button>
