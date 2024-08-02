@@ -65,7 +65,6 @@ const Adding = () => {
       toastr.success("PDF merged successfully!", "Success");
     } catch (error) {
       toastr.error("Failed to merge PDFs.", "Error");
-      console.error("Error merging PDFs: ", error);
     }
   };
  
