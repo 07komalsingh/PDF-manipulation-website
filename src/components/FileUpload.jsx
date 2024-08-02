@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import group from "../assets/img_gup.png";
 import SplitPage from "./SplitPage";
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import ValidatedFileInput from "./ValidatedFileInput";
 
 const FileUpload = (props) => {
