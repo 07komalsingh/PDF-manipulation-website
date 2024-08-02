@@ -19,6 +19,11 @@ function PdfToDocs() {
   const [downloadUrl, setDownloadUrl] = useState(null);
 
   const handleFileSelected = (selectedFiles) => {
+    if (selectedFiles.length > 1) {
+      toastr.error("Only one PDF file can be selected.", "Error");
+      return;
+    }
+
     const selectedFile = selectedFiles[0]; // Assuming only one file is selected
     if (selectedFile) {
       const reader = new FileReader();
