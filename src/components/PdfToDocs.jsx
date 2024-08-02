@@ -6,7 +6,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import group from "../assets/img_gup.png";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
-import ValidatedFileInput from "./ValidatedFileInput";
+import FileInput from "./FileInput";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -16,8 +16,10 @@ function PdfToDocs() {
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const [numPages, setNumPages] = useState(null);
+  const [downloadUrl, setDownloadUrl] = useState(null);
 
-  const handleFileSelected = (selectedFile) => {
+  const handleFileSelected = (selectedFiles) => {
+    const selectedFile = selectedFiles[0]; // Assuming only one file is selected
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -51,12 +53,7 @@ function PdfToDocs() {
       );
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "converted_file.docx");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      setDownloadUrl(url);
 
       // Display success message
       toastr.success("PDF converted to DOCX successfully!", "Success");
@@ -76,7 +73,7 @@ function PdfToDocs() {
     <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
       {!file ? (
         <div className="mb-4 m-2">
-          <h2 className="text-4xl font-semibold mb-16 text-center">
+          <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
             PDF to DOCs Converter
           </h2>
           <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
@@ -96,7 +93,7 @@ function PdfToDocs() {
                     className="h-20 mt-4 w-full md:w-auto"
                   />
                 </div>
-                <ValidatedFileInput onFilesSelected={handleFileSelected} />
+                <FileInput onFilesSelected={handleFileSelected} />
                 <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
                   <h1 className="text-2xl">Choose your PDF file here</h1>
                 </div>
@@ -105,8 +102,8 @@ function PdfToDocs() {
           </div>
         </div>
       ) : (
-        <div className="w-full flex flex-col items-center mb-[150px]">
-          <div className="w-full flex flex-wrap justify-center mb-4">
+        <div className="w-full flex flex-col items-center sm:mb-[150px] mb-[35px]">
+          <div className="w-full flex flex-wrap justify-center mb-4 mt-7">
             {fileDataURL && (
               <Document
                 file={fileDataURL}
@@ -125,16 +122,24 @@ function PdfToDocs() {
           </div>
           <button
             onClick={handleUpload}
-            className="bg-[#44B7BC] p-2 hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4"
+            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full"
           >
             Convert
           </button>
           {loading && <p>Loading...</p>}
           {error && <p>Error: {error}</p>}
+          {downloadUrl && (
+            <a
+              href={downloadUrl}
+              download="converted_file.docx"
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full mt-4"
+            >
+              Download DOCX
+            </a>
+          )}
         </div>
       )}
     </div>
   );
 }
-
 export default PdfToDocs;
