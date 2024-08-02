@@ -22,6 +22,7 @@
     "docx": "^8.5.0",
     "downloadjs": "^1.4.7",
     "file-worker": "^0.0.13",
+    "jszip": "^3.10.1",
     "pdf-lib": "^1.17.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
