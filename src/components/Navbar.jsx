@@ -9,9 +9,6 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
-    const tgl = () => {
-        setIsOpen(false)
-    }
 
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
@@ -61,3 +58,4 @@ export default Navbar;
 
 // /*on clicking toggleMenu it works with setIsOpen and setIsOpen does the work of negating the value of isOpen. setIsOpen task is to update the value of isOpen
 // So when value of isOpen will become true, it will do the isOpen && task/*
+

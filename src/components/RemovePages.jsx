@@ -37,7 +37,6 @@ function RemovePages() {
 
   const handleRemovePages = async () => {
     if (!selectedFile || checkedPages.size === 0) {
-      console.error("No file selected or no pages selected to remove");
       return;
     }
 

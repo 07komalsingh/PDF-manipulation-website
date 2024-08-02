@@ -1,5 +1,6 @@
 
-import React, { useState, useRef, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 import { PDFDocument } from "pdf-lib";
@@ -50,7 +51,19 @@ const SplitPage = () => {
     newRanges[index][field] = value;
 
     // Validation logic
-    if (newRanges[index].from < 1 || newRanges[index].to > numPages || newRanges[index].from > newRanges[index].to) {
+    const fromValue = parseInt(newRanges[index].from);
+    const toValue = parseInt(newRanges[index].to);
+
+    if (
+      isNaN(fromValue) ||
+      isNaN(toValue) ||
+      fromValue < 1 ||
+      toValue > numPages ||
+      fromValue >= toValue ||
+      fromValue >= numPages ||
+      toValue < 2 ||
+      (fromValue === 1 && toValue === numPages)
+    ) {
       setError(`Invalid range for Range ${index + 1}: Please enter a valid range.`);
     } else {
       setError('');
@@ -64,31 +77,47 @@ const SplitPage = () => {
   };
 
   const splitPDF = async () => {
-    if (!file || numPages === 1) return;
+    if (!file || numPages === 1) {
+      toastr.error("Cannot split a PDF with only one page.", "Error");
+      return;
+    }
 
     try {
       const reader = new FileReader();
       reader.onload = async () => {
-        const existingPdfBytes = new Uint8Array(reader.result);
-        const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        const newPdfDoc = await PDFDocument.create();
-        for (const range of ranges) {
-          for (let i = range.from - 1; i < range.to; i++) {
-            const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
-            newPdfDoc.addPage(copiedPage);
-          }
-        }
+        try {
+          const existingPdfBytes = new Uint8Array(reader.result);
+          const pdfDoc = await PDFDocument.load(existingPdfBytes, { ignoreEncryption: true });
+          const newPdfDoc = await PDFDocument.create();
 
-        const pdfBytes = await newPdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        setDownloadUrl(url);
-        toastr.success("PDF split successfully!", "Success");
+          for (const range of ranges) {
+            const fromValue = parseInt(range.from);
+            const toValue = parseInt(range.to);
+
+            // Ensure valid ranges
+            if (fromValue >= toValue || fromValue >= numPages || toValue < 2 || (fromValue === 1 && toValue === numPages)) {
+              toastr.error("Invalid ranges detected. Please check your inputs.", "Error");
+              return;
+            }
+
+            for (let i = fromValue - 1; i < toValue; i++) {
+              const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
+              newPdfDoc.addPage(copiedPage);
+            }
+          }
+
+          const pdfBytes = await newPdfDoc.save();
+          const blob = new Blob([pdfBytes], { type: "application/pdf" });
+          const url = URL.createObjectURL(blob);
+          setDownloadUrl(url);
+          toastr.success("PDF split successfully!", "Success");
+        } catch (e) {
+          toastr.error("Failed to process the PDF. It might be protected.", "Error");
+        }
       };
       reader.readAsArrayBuffer(file);
     } catch (error) {
       toastr.error("Failed to split PDF.", "Error");
-      console.error("Error splitting PDF: ", error);
     }
   };
 
@@ -132,11 +161,12 @@ const SplitPage = () => {
                   type="number"
                   value={range.from}
                   onChange={(e) =>
-                    handleRangeChange(index, "from", parseInt(e.target.value))
+                    handleRangeChange(index, "from", e.target.value)
                   }
                   className="border-none p-2 w-16 text-center bg-[#F5F5F5]"
                   min="1"
-                  max={numPages}
+                  max={numPages - 1}
+                  required
                 />
               </div>
 
@@ -147,11 +177,12 @@ const SplitPage = () => {
                   type="number"
                   value={range.to}
                   onChange={(e) =>
-                    handleRangeChange(index, "to", parseInt(e.target.value))
+                    handleRangeChange(index, "to", e.target.value)
                   }
                   className="border-none p-2 w-16 text-center bg-[#F5F5F5]"
-                  min="1"
+                  min="2"
                   max={numPages}
+                  required
                 />
               </div>
               <div className="flex gap-2 justify-center items-center py-4 px-6 rounded-xl border-2 border-[#44B7BC] text-[#44B7BC] w-[230px] sm:w-fit">
@@ -169,7 +200,7 @@ const SplitPage = () => {
 
           <button
             onClick={splitPDF}
-            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4 w-[230px] sm:w-fit"
+            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold sm:py-2  flex justify-center py-2 sm:px-24 w-[250px] sm:w-fit rounded-full"
             disabled={!!error} // Disable the button if there's an error
           >
             Split to PDF
@@ -179,8 +210,7 @@ const SplitPage = () => {
             <a
               href={downloadUrl}
               download="split.pdf"
-              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-11 rounded-full mt-4 w-[230px] sm:w-fit"
-            >
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold sm:py-2 py-2 sm:px-[65px] w-[250px] sm:w-fit text-center rounded-full mt-4"            >
               Download Split PDF
             </a>
           )}
