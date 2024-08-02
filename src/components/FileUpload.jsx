@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import group from "../assets/img_gup.png";
 import SplitPage from "./SplitPage";
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import ValidatedFileInput from "./ValidatedFileInput";
 
 const FileUpload = (props) => {
@@ -17,7 +21,7 @@ const FileUpload = (props) => {
     <div className="flex flex-col items-center justify-center bg-[#F5F5F5]  pb-14">
       {!selectedFile ? (
         <div className="mb-4">
-          <h2 className="text-4xl font-semibold mb-16 p-5 text-center ">{props.splitp}</h2>
+          <h2 className="text-4xl font-semibold mb-16 p-5 text-center ">{props.commonp}</h2>
           <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">Upload Document</h2>
           <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
             <div>
