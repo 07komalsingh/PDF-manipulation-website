@@ -21,7 +21,7 @@ const FileInput = ({ onFilesSelected, useIcon }) => {
       }
       throw error; // Some other error occurred
     }
-  };
+  };          
 
   const handleFileChange = async (event) => {
     const files = Array.from(event.target.files);
