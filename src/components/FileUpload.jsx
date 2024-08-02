@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate if using react-router-dom
 import group from "../assets/img_gup.png";
 import SplitPage from "./SplitPage";
-import RemovePages from "./components/RemovePages";
+
 import ValidatedFileInput from "./ValidatedFileInput";
  
 const FileUpload = (props) => {
