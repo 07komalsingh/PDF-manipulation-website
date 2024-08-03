@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import add_page from '../assets/img_add.png';
@@ -13,7 +11,7 @@ import img_convert from '../assets/img_convert.png';
 const tools = [
     { name: 'Merge PDF', icon: img_merge, path: '/merge' },
     { name: 'Split PDF', icon: img_split, path: '/split' },
-    { name: 'Reorder PDF', icon: img_recorder, path: '/recorder' },
+    { name: 'Reorder PDF', icon: img_recorder, path: '/reorder' },
     { name: 'Remove Pages', icon: img_remove, path: '/remove' },
     { name: 'Add Blank Page', icon: img_blankPage, path: '/add_blank' },
     { name: 'PDF to Docs', icon: img_convert, path: '/convert' },
