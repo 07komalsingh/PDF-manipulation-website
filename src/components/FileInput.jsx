@@ -62,7 +62,7 @@ const FileInput = ({ onFilesSelected, useIcon }) => {
       <input
         type="file"
         accept="application/pdf"
-        multiple={false} //ensure only one pdf should be selected
+        multiple
         ref={fileInputRef}
         onChange={handleFileChange}
         className="hidden"
