@@ -7,12 +7,12 @@ import group from "../assets/img_gup.png";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import FileInput from './FileInput';
-import { RiDeleteBin5Fill, RiDragMove2Fill } from "react-icons/ri";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+ 
 // Set up pdfjs worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-
+ 
 toastr.options = {
   closeButton: true,
   progressBar: true,
@@ -21,69 +21,70 @@ toastr.options = {
   preventDuplicates: true,
   newestOnTop: true,
 };
-
+ 
 const Adding = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [fileURLs, setFileURLs] = useState([]);
   const [mergedPDFUrl, setMergedPDFUrl] = useState(null);
-
+ 
   const onFilesSelected = (files) => {
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
     const newUrls = files.map((file) => URL.createObjectURL(file));
     setFileURLs((prevUrls) => [...prevUrls, ...newUrls]);
     setMergedPDFUrl(null); // Clear merged PDF URL when new files are selected
   };
-
+ 
   const handleRemoveFile = (index) => {
     const newSelectedFiles = [...selectedFiles];
     const newFileURLs = [...fileURLs];
-
+ 
     newSelectedFiles.splice(index, 1);
     newFileURLs.splice(index, 1);
-
+ 
     setSelectedFiles(newSelectedFiles);
     setFileURLs(newFileURLs);
   };
-
+ 
   const handleMerge = async () => {
     try {
       const mergedPdf = await PDFDocument.create();
-
+ 
       for (const file of selectedFiles) {
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await PDFDocument.load(arrayBuffer);
         const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
         copiedPages.forEach((page) => mergedPdf.addPage(page));
       }
-
+ 
       const mergedPdfFile = await mergedPdf.save();
       const mergedPdfBlob = new Blob([mergedPdfFile], {
         type: "application/pdf",
       });
       const mergedPdfUrl = URL.createObjectURL(mergedPdfBlob);
       setMergedPDFUrl(mergedPdfUrl);
-
+ 
       toastr.success("PDF merged successfully!", "Success");
     } catch (error) {
       toastr.error("Failed to merge PDFs.", "Error");
     }
   };
-
-  const handleOnDragEnd = (result) => {
+ 
+  const onDragEnd = (result) => {
     if (!result.destination) return;
-
-    const items = Array.from(fileURLs);
+ 
+    const items = Array.from(selectedFiles);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
-    const reorderedFiles = Array.from(selectedFiles);
-    const [reorderedFile] = reorderedFiles.splice(result.source.index, 1);
-    reorderedFiles.splice(result.destination.index, 0, reorderedFile);
-
-    setFileURLs(items);
-    setSelectedFiles(reorderedFiles);
+ 
+    setSelectedFiles(items);
+ 
+    const urlItems = Array.from(fileURLs);
+    const [reorderedUrlItem] = urlItems.splice(result.source.index, 1);
+    urlItems.splice(result.destination.index, 0, reorderedUrlItem);
+ 
+    setFileURLs(urlItems);
   };
-
+ 
   return (
     <div className="flex flex-col items-center  mt-5 pb-14 bg-[#F5F5F5]">
       {selectedFiles.length < 1 ? (
@@ -106,42 +107,39 @@ const Adding = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center sm:mb-3">
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="droppable" direction="horizontal">
+        <div className="flex flex-col items-center justify-center sm:mb-3 min-h-[550px]">
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="pdfs" direction="horizontal">
               {(provided) => (
                 <div
-                  className="grid grid-cols-4 gap-4 p-4"
+                  className="flex flex-wrap justify-center"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
                   {fileURLs.map((url, index) => (
-                    <Draggable key={index} draggableId={index.toString()} index={index}>
+                    <Draggable key={url} draggableId={url} index={index}>
                       {(provided) => (
                         <div
-                          className=" bg-white shadow-lg rounded-lg p-4 transition-transform duration-300 ease-in-out transform hover:scale-105 border border-gray-200"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
+                          className="relative mb-8 mx-2 bg-white shadow-md rounded-lg p-4"
                         >
                           <button
                             onClick={() => handleRemoveFile(index)}
-                            className="absolute top-0 right-0 m-2 text-red-500 hover:text-red-700"
+                            className="absolute top-0 right-0  text-red-500 hover:text-red-700"
                           >
                             <RiDeleteBin5Fill className="w-5 h-5" />
                           </button>
-                          <div className="flex items-center justify-between">
-                            <Document file={url}>
-                              <Page pageNumber={1} width={130} />
-                            </Document>
-                            <RiDragMove2Fill className="w-6 h-6 text-gray-500 cursor-grab" />
-                          </div>
+                          <Document file={url}>
+                            <Page pageNumber={1} width={250} />
+                          </Document>
                         </div>
                       )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
-                  <div className=" mx-2 bg-white shadow-lg rounded-lg py-6 px-9 flex items-center justify-center">
+                  <div className="mb-8 mx-2 bg-white shadow-md rounded-lg py-8 px-9 flex items-center justify-center sm:w-[250px] w-[280px]">
                     <FileInput onFilesSelected={onFilesSelected} useIcon={true} />
                   </div>
                 </div>
@@ -173,8 +171,6 @@ const Adding = () => {
     </div>
   );
 };
-
-export default Adding;
-
  
+export default Adding;
  

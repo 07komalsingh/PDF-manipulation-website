@@ -17,7 +17,7 @@ const ValidatedFileInput = ({ onFilesSelected }) => {
       }
 
       // Check if the path is '/split'
-      if (path === '/split') {
+      if (path === '/split' || path ==='/convert') {
         try {
           const fileArrayBuffer = await selectedFile.arrayBuffer();
           const pdfDoc = await PDFDocument.load(fileArrayBuffer);
