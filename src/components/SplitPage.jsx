@@ -58,17 +58,41 @@ const SplitPage = () => {
       isNaN(fromValue) ||
       isNaN(toValue) ||
       fromValue < 1 ||
-      toValue > numPages ||
-      fromValue >= toValue ||
-      fromValue >= numPages ||
-      toValue < 2 ||
-      (fromValue === 1 && toValue === numPages)
+      toValue > numPages || // Ensure `to` is within page bounds
+      fromValue > toValue ||
+      toValue < 1 || // Allow the same values for from and to
+      fromValue >= numPages || // Ensure `from` is within
+      (fromValue === 1 && toValue === numPages) // Ensure `to` is not less than 1
     ) {
       setError(`Invalid range for Range ${index + 1}: Please enter a valid range.`);
     } else {
       setError('');
     }
+     // Check for duplicate ranges
+     const isDuplicate = newRanges.some(
+      (range, idx) =>
+        idx !== index &&
+        range.from === newRanges[index].from &&
+        range.to === newRanges[index].to
+    );
 
+    if (isDuplicate) {
+      setError(
+        `Range ${index + 1} is a duplicate. Please enter a unique range.`
+      );
+    } else {
+      setError("");
+    }
+
+    const previousRange = newRanges[index - 1];
+    if (index > 0 && fromValue <= previousRange.to) {
+      setError(
+        `Range ${index + 1} should start after the previous range's end.`
+      );
+      return;
+    } else {
+      setError("");
+    }
     setRanges(newRanges);
   };
 
@@ -97,8 +121,16 @@ const SplitPage = () => {
             const toValue = parseInt(range.to);
 
             // Ensure valid ranges
-            if (fromValue >= toValue || fromValue >= numPages || toValue < 2 || (fromValue === 1 && toValue === numPages)) {
-              toastr.error("Invalid ranges detected. Please check your inputs.", "Error");
+            if (
+              fromValue > toValue ||
+              fromValue >= numPages ||
+              toValue < 2 ||
+              (fromValue === 1 && toValue === numPages)
+            ) {
+              toastr.error(
+                "Invalid ranges detected. Please check your inputs.",
+                "Error"
+              );
               return;
             }
 
@@ -115,8 +147,8 @@ const SplitPage = () => {
 
           // Handle non-mentioned pages
           const nonMentionedPages = pageTracker
-            .map((included, index) => !included ? index + 1 : null)
-            .filter(page => page !== null);
+            .map((included, index) => (!included ? index + 1 : null))
+            .filter((page) => page !== null);
 
           if (nonMentionedPages.length > 0) {
             const newPdfDoc = await PDFDocument.create();
