@@ -7,7 +7,11 @@ import group from "../assets/img_gup.png";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import FileInput from './FileInput';
+<<<<<<< Updated upstream
 import { RiDeleteBin5Fill, RiDragMove2Fill } from "react-icons/ri";
+=======
+import { RiDeleteBin5Fill } from "react-icons/ri";
+>>>>>>> Stashed changes
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // Set up pdfjs worker
@@ -69,6 +73,7 @@ const Adding = () => {
     }
   };
 
+<<<<<<< Updated upstream
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -82,6 +87,22 @@ const Adding = () => {
 
     setFileURLs(items);
     setSelectedFiles(reorderedFiles);
+=======
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(selectedFiles);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setSelectedFiles(items);
+
+    const urlItems = Array.from(fileURLs);
+    const [reorderedUrlItem] = urlItems.splice(result.source.index, 1);
+    urlItems.splice(result.destination.index, 0, reorderedUrlItem);
+
+    setFileURLs(urlItems);
+>>>>>>> Stashed changes
   };
 
   return (
@@ -106,16 +127,26 @@ const Adding = () => {
           </div>
         </div>
       ) : (
+<<<<<<< Updated upstream
         <div className="flex flex-col items-center justify-center sm:mb-3">
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="droppable" direction="horizontal">
               {(provided) => (
                 <div
                   className="grid grid-cols-4 gap-4 p-4"
+=======
+        <div className="flex flex-col items-center justify-center sm:mb-3 min-h-[550px]">
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="pdfs" direction="horizontal">
+              {(provided) => (
+                <div
+                  className="flex flex-wrap justify-center"
+>>>>>>> Stashed changes
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
                   {fileURLs.map((url, index) => (
+<<<<<<< Updated upstream
                     <Draggable key={index} draggableId={index.toString()} index={index}>
                       {(provided) => (
                         <div
@@ -136,12 +167,35 @@ const Adding = () => {
                             </Document>
                             <RiDragMove2Fill className="w-6 h-6 text-gray-500 cursor-grab" />
                           </div>
+=======
+                    <Draggable key={url} draggableId={url} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="relative mb-8 mx-2 bg-white shadow-md rounded-lg p-4"
+                        >
+                          <button
+                            onClick={() => handleRemoveFile(index)}
+                            className="absolute top-0 right-0  text-red-500 hover:text-red-700"
+                          >
+                            <RiDeleteBin5Fill className="w-5 h-5" />
+                          </button>
+                          <Document file={url}>
+                            <Page pageNumber={1} width={250} />
+                          </Document>
+>>>>>>> Stashed changes
                         </div>
                       )}
                     </Draggable>
                   ))}
                   {provided.placeholder}
+<<<<<<< Updated upstream
                   <div className=" mx-2 bg-white shadow-lg rounded-lg py-6 px-9 flex items-center justify-center">
+=======
+                  <div className="mb-8 mx-2 bg-white shadow-md rounded-lg py-8 px-9 flex items-center justify-center sm:w-[250px] w-[280px]">
+>>>>>>> Stashed changes
                     <FileInput onFilesSelected={onFilesSelected} useIcon={true} />
                   </div>
                 </div>
@@ -176,5 +230,9 @@ const Adding = () => {
 
 export default Adding;
 
+<<<<<<< Updated upstream
  
  
+=======
+
+>>>>>>> Stashed changes
