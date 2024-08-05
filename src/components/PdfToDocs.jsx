@@ -6,7 +6,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import group from "../assets/img_gup.png";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
-import FileInput from "./FileInput";
+import ValidatedFileInput from "./ValidatedFileInput"; // Import the ValidatedFileInput component
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -18,13 +18,7 @@ function PdfToDocs() {
   const [numPages, setNumPages] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState(null);
 
-  const handleFileSelected = (selectedFiles) => {
-    if (selectedFiles.length > 1) {
-      toastr.error("Only one PDF file can be selected.", "Error");
-      return;
-    }
-
-    const selectedFile = selectedFiles[0]; // Assuming only one file is selected
+  const handleFileSelected = (selectedFile) => {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -98,7 +92,7 @@ function PdfToDocs() {
                     className="h-20 mt-4 w-full md:w-auto"
                   />
                 </div>
-                <FileInput onFilesSelected={handleFileSelected} />
+                <ValidatedFileInput onFilesSelected={handleFileSelected} /> {/* Use ValidatedFileInput here */}
                 <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
                   <h1 className="text-2xl">Choose your PDF file here</h1>
                 </div>

@@ -8,7 +8,7 @@ import PageNotFound from "./components/PageNotFound";
 import Footer from "./components/Footer";
 import PdfToDocs from "./components/PdfToDocs";
 import FileUpload from "./components/FileUpload";
-
+import Reorder from "./components/Reorder";
  
 function App() {
   let splitprops = "Split PDF Files";
@@ -24,6 +24,7 @@ function App() {
         <Route path="/merge" element={<MergePDF />} />
         <Route path="/remove" element={<FileUpload  commonp={removeprops}/>} />
         <Route path="/convert" element={<PdfToDocs />} />
+        <Route path="/reorder" element={<Reorder />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
