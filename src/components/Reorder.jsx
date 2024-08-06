@@ -6,6 +6,8 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import ValidatedFileInput from "./ValidatedFileInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -26,6 +28,16 @@ const Reorder = () => {
         const fileArrayBuffer = await selectedFile.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileArrayBuffer);
         const numPages = pdfDoc.getPageCount();
+
+        if (numPages > 10) {
+          toastr.error("Selected PDF has more than 10 pages. Please select a PDF with 10 pages or fewer.", "Error");
+          setFile(null);
+          setFileDataURL(null);
+          setNumPages(0);
+          setPages([]);
+          return;
+        }
+
         setNumPages(numPages);
 
         // Create an array of pages
@@ -59,8 +71,11 @@ const Reorder = () => {
       const pdfBytes = await newPdfDoc.save();
       const url = window.URL.createObjectURL(new Blob([pdfBytes]));
       setDownloadUrl(url);
+
+      toastr.success("PDF reordered successfully!", "Success");
     } catch (err) {
       console.error("Failed to reorder PDF:", err);
+      toastr.error("Failed to reorder PDF.", "Error");
     }
   };
 
@@ -136,6 +151,9 @@ const Reorder = () => {
                             style={{ ...provided.draggableProps.style }}
                           >
                             <Page pageNumber={pageNumber} width={250} />
+                            <div className="text-center mt-2 text-lg">
+                              {pageNumber}
+                            </div>
                           </div>
                         )}
                       </Draggable>
