@@ -1,129 +1,140 @@
-import React, { useState } from "react";
-import { PDFDocument } from "pdf-lib";
-import download from "downloadjs";
-import { pdfjs, Document, Page } from "react-pdf";
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+import React, { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { PDFDocument } from 'pdf-lib';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import group from '../assets/img_gup.png';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+import ValidatedFileInput from './ValidatedFileInput';
 
-function RemovePages() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [pdfDoc, setPdfDoc] = useState(null);
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+toastr.options = {
+  closeButton: true,
+  progressBar: true,
+  timeOut: "3000",
+  extendedTimeOut: "1000",
+  preventDuplicates: true,
+  newestOnTop: true,
+};
+
+const RemovePages = () => {
+  const [file, setFile] = useState(null);
   const [numPages, setNumPages] = useState(null);
-  const [checkedPages, setCheckedPages] = useState(new Set());
-  const [modifiedPdfBytes, setModifiedPdfBytes] = useState(null);
+  const [pageNumbers, setPageNumbers] = useState([]);
+  const [selectedPages, setSelectedPages] = useState([]);
+  const [fileURL, setFileURL] = useState(null);
+  const [updatedPdfUrl, setUpdatedPdfUrl] = useState(null);
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    const buffer = await file.arrayBuffer();
-    const doc = await PDFDocument.load(buffer);
-    setPdfDoc(doc);
-    setSelectedFile(file);
-    setModifiedPdfBytes(null); // Reset modified PDF bytes when a new document is loaded
+  const handleFileSelected = (files) => {
+    if (files.length > 0) {
+      setFile(files[0]);
+      const url = URL.createObjectURL(files[0]);
+      setFileURL(url);
+      setUpdatedPdfUrl(null); // Reset the updated PDF URL
+    }
   };
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
-    setCheckedPages(new Set()); // Reset checked pages when a new document is loaded
+    const pages = Array.from({ length: numPages }, (_, i) => i + 1);
+    setPageNumbers(pages);
   };
 
-  const handleCheckboxChange = (pageNumber) => {
-    const updatedCheckedPages = new Set(checkedPages);
-    if (updatedCheckedPages.has(pageNumber)) {
-      updatedCheckedPages.delete(pageNumber);
-    } else {
-      updatedCheckedPages.add(pageNumber);
-    }
-    setCheckedPages(updatedCheckedPages);
+  const handlePageSelection = (pageNumber) => {
+    setSelectedPages((prevSelected) => {
+      if (prevSelected.includes(pageNumber)) {
+        return prevSelected.filter((num) => num !== pageNumber);
+      } else {
+        return [...prevSelected, pageNumber];
+      }
+    });
   };
 
   const handleRemovePages = async () => {
-    if (!selectedFile || checkedPages.size === 0) {
+    if (!file || selectedPages.length === 0) {
+      toastr.error("No pages selected for removal.", "Error");
       return;
     }
 
-    const fileBytes = await selectedFile.arrayBuffer();
-    const pdfDoc = await PDFDocument.load(fileBytes);
+    try {
+      const pdfDoc = await PDFDocument.load(await file.arrayBuffer());
+      const pagesToKeep = pageNumbers.filter((pageNum) => !selectedPages.includes(pageNum - 1));
 
-    const pagesToKeep = pdfDoc.getPages().filter(
-      (_, index) => !checkedPages.has(index)
-    );
+      const newPdfDoc = await PDFDocument.create();
+      for (const pageNum of pagesToKeep) {
+        const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNum - 1]);
+        newPdfDoc.addPage(copiedPage);
+      }
 
-    const newPdfDoc = await PDFDocument.create();
-    for (const [index, page] of pagesToKeep.entries()) {
-      const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [index]);
-      newPdfDoc.addPage(copiedPage);
-    }
+      const newPdfBytes = await newPdfDoc.save();
+      const newPdfBlob = new Blob([newPdfBytes], { type: 'application/pdf' });
+      const newPdfUrl = URL.createObjectURL(newPdfBlob);
+      setUpdatedPdfUrl(newPdfUrl);
 
-    const newPdfBytes = await newPdfDoc.save();
-    setModifiedPdfBytes(newPdfBytes);
-  };
-
-  const handleDownload = () => {
-    if (modifiedPdfBytes) {
-      download(modifiedPdfBytes, "modified.pdf", "application/pdf");
+      toastr.success("Pages removed successfully!", "Success");
+    } catch (error) {
+      toastr.error("Failed to remove pages.", "Error");
     }
   };
 
   return (
-    <div className="container mx-auto p-4 text-center">
-      <h2 className="text-2xl font-bold mb-4">Remove Pages from PDF</h2>
-      <div className="mb-4">
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          className="mb-2 mx-auto"
-        />
-        {selectedFile && (
-          <div>
-            <p>Selected file: {selectedFile.name}</p>
-          </div>
-        )}
-      </div>
-
-      <div className="mb-4">
-        {selectedFile && (
-          <Document
-            file={selectedFile}
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <div className="flex flex-wrap justify-center">
-              {Array.from(new Array(numPages), (el, index) => (
-                <div key={`page_${index + 1}`} className="m-2">
-                  <div className="flex flex-col items-center">
-                    <input
-                      type="checkbox"
-                      onChange={() => handleCheckboxChange(index)}
-                      className="mb-2"
-                    />
-                    <Page pageNumber={index + 1} />
-                  </div>
+    <div className="flex flex-col items-center mt-5 pb-14 bg-[#F5F5F5]">
+      {!file ? (
+        <div className="mb-4 m-2">
+          <h2 className="text-4xl font-semibold mb-16 p-5 text-center">Remove PDF Pages</h2>
+          <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">Upload Document</h2>
+          <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
+            <div>
+              <h1 className="text-[#060808] font-poppins text-2xl font-normal text-center">Upload PDF Attachments</h1>
+              <div className="flex flex-col items-center">
+                <div>
+                  <img src={group} alt="PDF Icon" className="h-20 mt-4 w-full md:w-auto" />
                 </div>
-              ))}
+                <ValidatedFileInput onFilesSelected={handleFileSelected} />
+                <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
+                  <h1 className="text-2xl">Choose your PDF file here</h1>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center sm:mb-3 min-h-[540px]">
+          <Document file={fileURL} onLoadSuccess={onDocumentLoadSuccess}>
+            {pageNumbers.map((pageNumber) => (
+              <div key={pageNumber} className="relative mb-8 mx-2 bg-white shadow-md rounded-lg p-4">
+                <Page pageNumber={pageNumber} width={250} />
+                <div className="absolute top-0 left-0">
+                  <input
+                    type="checkbox"
+                    checked={selectedPages.includes(pageNumber)}
+                    onChange={() => handlePageSelection(pageNumber)}
+                  />
+                </div>
+              </div>
+            ))}
           </Document>
-        )}
-      </div>
-
-      <button
-        onClick={handleRemovePages}
-        className="bg-[#44B7BC] text-white py-2 px-4 rounded-full mx-auto mb-4"
-        disabled={!selectedFile || checkedPages.size === 0}
-      >
-        Remove Pages
-      </button>
-
-      {modifiedPdfBytes && (
-        <div className="mt-4">
           <button
-            className="bg-[#44B7BC] text-white py-2 px-4 rounded-full mx-auto"
-            onClick={handleDownload}
+            className="bg-gradient-to-r bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full shadow-md transition duration-300"
+            onClick={handleRemovePages}
           >
-            Download Modified PDF
+            Remove Pages
           </button>
+          {updatedPdfUrl && (
+            <a
+              href={updatedPdfUrl}
+              className="bg-gradient-to-r bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-20 rounded-full mt-4 shadow-md transition duration-300"
+              download="updated.pdf"
+            >
+              Download PDF
+            </a>
+          )}
         </div>
       )}
     </div>
   );
-}
+};
 
 export default RemovePages;
