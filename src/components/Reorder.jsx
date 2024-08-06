@@ -28,6 +28,16 @@ const Reorder = () => {
         const fileArrayBuffer = await selectedFile.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileArrayBuffer);
         const numPages = pdfDoc.getPageCount();
+
+        if (numPages > 10) {
+          toastr.error("Selected PDF has more than 10 pages. Please select a PDF with 10 pages or fewer.", "Error");
+          setFile(null);
+          setFileDataURL(null);
+          setNumPages(0);
+          setPages([]);
+          return;
+        }
+
         setNumPages(numPages);
 
         // Create an array of pages
@@ -141,6 +151,9 @@ const Reorder = () => {
                             style={{ ...provided.draggableProps.style }}
                           >
                             <Page pageNumber={pageNumber} width={250} />
+                            <div className="text-center mt-2 text-lg">
+                              {pageNumber}
+                            </div>
                           </div>
                         )}
                       </Draggable>
@@ -173,3 +186,4 @@ const Reorder = () => {
 };
 
 export default Reorder;
+
