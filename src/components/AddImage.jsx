@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
+import { pdfjs } from "react-pdf";
 import ValidatedFileInput from "./ValidatedFileInput";
 import { Document, Page } from "react-pdf";
 import group from "../assets/img_gup.png";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 const AddImage = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfDataURL, setPdfDataURL] = useState(null);
@@ -14,6 +16,7 @@ const AddImage = () => {
   const [imagePosition, setImagePosition] = useState({ x: 50, y: 50 });
   const [imageSize, setImageSize] = useState({ width: 200, height: 200 });
   const [downloadUrl, setDownloadUrl] = useState(null);
+  const [pageRange, setPageRange] = useState({ from: 1, to: 1 });
 
   const handlePdfSelected = async (selectedFile) => {
     const fileDataURL = URL.createObjectURL(selectedFile);
@@ -27,6 +30,7 @@ const AddImage = () => {
 
       const previewPages = Array.from({ length: numPages }, (_, index) => index + 1);
       setPdfPreview(previewPages);
+      setPageRange({ from: 1, to: numPages });
     } catch (err) {
       console.error("Failed to load PDF:", err);
     }
@@ -50,14 +54,15 @@ const AddImage = () => {
       const embeddedImage = await pdfDoc.embedPng(imageArrayBuffer);
 
       const pages = pdfDoc.getPages();
-      pages.forEach((page) => {
+      for (let i = pageRange.from - 1; i < pageRange.to; i++) {
+        const page = pages[i];
         page.drawImage(embeddedImage, {
           x: imagePosition.x,
           y: page.getHeight() - imagePosition.y - imageSize.height,
           width: imageSize.width,
           height: imageSize.height,
         });
-      });
+      }
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -149,6 +154,29 @@ const AddImage = () => {
               value={imageSize.height}
               onChange={(e) => setImageSize({ ...imageSize, height: +e.target.value })}
               placeholder="Height"
+              className="border rounded px-2 py-1"
+            />
+          </div>
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold font-poppins mb-3 text-center">
+              Set Page Range (from, to)
+            </h2>
+            <input
+              type="number"
+              value={pageRange.from}
+              onChange={(e) => setPageRange({ ...pageRange, from: +e.target.value })}
+              placeholder="From page"
+              min="1"
+              max={pdfPreview.length}
+              className="border rounded px-2 py-1 mr-2"
+            />
+            <input
+              type="number"
+              value={pageRange.to}
+              onChange={(e) => setPageRange({ ...pageRange, to: +e.target.value })}
+              placeholder="To page"
+              min="1"
+              max={pdfPreview.length}
               className="border rounded px-2 py-1"
             />
           </div>

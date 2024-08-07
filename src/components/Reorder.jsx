@@ -8,8 +8,8 @@ import ValidatedFileInput from "./ValidatedFileInput";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 const Reorder = () => {
   const [file, setFile] = useState(null);
