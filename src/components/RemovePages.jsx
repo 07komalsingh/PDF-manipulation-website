@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { PDFDocument } from "pdf-lib";
 import download from "downloadjs";
@@ -62,41 +61,43 @@ function RemovePages() {
       setErrorMessage("");
     }
   };
- 
   const handleRemovePages = async () => {
     if (!pdfDoc || checkedPages.size === 0) {
       setErrorMessage("At least select one page to remove.");
       return;
     }
- 
+  
     if (checkedPages.size === numPages) {
       setErrorMessage("All pages cannot be removed.");
     } else {
       setErrorMessage("");
- 
-      const pagesToKeep = pdfDoc.getPages().filter(
-        (_, index) => !checkedPages.has(index)
-      );
- 
+  
       const newPdfDoc = await PDFDocument.create();
-      for (const [index, page] of pagesToKeep.entries()) {
-        const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [index]);
-        newPdfDoc.addPage(copiedPage);
+      const pages = pdfDoc.getPages();
+      
+      for (let i = 0; i < numPages; i++) {
+        if (!checkedPages.has(i)) {
+          const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [i]);
+          newPdfDoc.addPage(copiedPage);
+        }
       }
- 
+  
       const newPdfBytes = await newPdfDoc.save();
       setModifiedPdfBytes(newPdfBytes);
- 
+  
       // Show success message
       toastr.success("Pages removed successfully!", "Success");
     }
   };
- 
+
+   
   const handleDownload = () => {
     if (modifiedPdfBytes) {
       download(modifiedPdfBytes, "modified.pdf", "application/pdf");
     }
   };
+ 
+  
  
   return (
     <div className="py-10 px-4 mb-30 font-Poppins w-full bg-[#f5f5f5] flex justify-center">

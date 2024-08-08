@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
-import pdfIcon from '../assets/img_easydoc.png'; 
-import { Link } from 'react-router-dom';
-
+import pdfIcon from '../assets/img_easydoc.png';
+import { Link, useNavigate } from 'react-router-dom';
+ 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const navigate = useNavigate(); // Define navigate using useNavigate hook
+ 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
-
-
+ 
+ 
+    const handleNavigation = (path, toolPath) => {
+        if (toolPath) {
+            navigate(path, { state: { toolPath } });
+        } else {
+            navigate(path);
+        }
+    };
+ 
+ 
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
             <div className="container lg:justify-around justify-between flex items-center px-6 space-x-6 lg:w-[100vw]">
@@ -18,7 +28,8 @@ const Navbar = () => {
                 </div>
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold">
                     <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg" >Merge PDF</Link>
-                    <Link to="/split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link>
+                    {/* <Link to="/file", "/split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link> */}
+                    <button onClick={() => handleNavigation('/file', '/split')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
                     <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
                     <Link to="/convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
                     <Link to="/all-tools" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</Link>
@@ -38,12 +49,13 @@ const Navbar = () => {
                         </svg>
                     </button>
                 </div>
-
+ 
             </div>
             {isOpen && (
                 <div className="md:hidden">
                     <Link to="/merge" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg " onClick={toggleMenu}>Merge PDF</Link>
-                    <Link to="/split" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Split PDF</Link>
+                    {/* <Link to="/split" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Split PDF</Link> */}
+                    <button onClick={() => { handleNavigation('/file', '/split'); toggleMenu(); }} className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
                     <Link to="/compress" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Compress PDF</Link>
                     <Link to="/convert" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}> Convert PDF</Link>
                     <Link to="/all-tools" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>All PDF Tools</Link>
@@ -52,10 +64,12 @@ const Navbar = () => {
         </div>
     );
 }
-
+ 
 export default Navbar;
-
-
+ 
+ 
 // /*on clicking toggleMenu it works with setIsOpen and setIsOpen does the work of negating the value of isOpen. setIsOpen task is to update the value of isOpen
 // So when value of isOpen will become true, it will do the isOpen && task/*
-
+ 
+ 
+ 

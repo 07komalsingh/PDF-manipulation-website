@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
@@ -79,7 +77,7 @@ const AddBlankPage = () => {
       const pdfUrl = URL.createObjectURL(pdfBlob);
       setModifiedPdfBytes(pdfBytes); // Update the modified PDF bytes
       setModifiedPdfUrl(pdfUrl);
-      setBlankPageCount(blankPageCount + 1); // Increase the blank page count
+      setBlankPageCount(blankPageCount); // Increase the blank page count
 
       toastr.success("Blank page added successfully!", "Success");
     } catch (error) {
