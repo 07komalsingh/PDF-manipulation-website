@@ -19,9 +19,7 @@ const PlayStore = () => {
             Manage your documents effortlessly with Easy Docoments. Download it now from the Play Store!
             </p>
            
-            <button className="bg-[#44B7BC] hover:bg-[#30aab1] text-white text-24 font-semibold sm:py-2 sm:px-11 w-56 h-10 rounded-full">
-              Download Now
-            </button>
+            <button className="bg-[#44B7BC] hover:bg-[#30aab1] text-white text-24 font-semibold sm:py-2 sm:px-12 w-56 h-10 rounded-full ">Download</button>
           </div>
         </div>
       </div>
