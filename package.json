@@ -21,7 +21,6 @@
     "axios": "^1.7.2",
     "docx": "^8.5.0",
     "downloadjs": "^1.4.7",
-    "file-saver": "^2.0.5",
     "file-worker": "^0.0.13",
     "jszip": "^3.10.1",
     "pdf-lib": "^1.17.1",
@@ -31,8 +30,6 @@
     "react-icons": "^5.2.1",
     "react-pdf": "^9.1.0",
     "react-router-dom": "^6.25.1",
-    "react-toastify": "^10.0.5",
-    "toaster": "^0.1.2",
     "toastr": "^2.1.4"
   },
   "devDependencies": {
