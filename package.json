@@ -21,6 +21,7 @@
     "axios": "^1.7.2",
     "docx": "^8.5.0",
     "downloadjs": "^1.4.7",
+    "file-saver": "^2.0.5",
     "file-worker": "^0.0.13",
     "jszip": "^3.10.1",
     "pdf-lib": "^1.17.1",
