@@ -1,30 +1,20 @@
+
+
+
 import React, { useState, useEffect } from "react";
-import { Document, Page } from "react-pdf";
-import { pdfjs } from "react-pdf";
 import { PDFDocument } from "pdf-lib";
 import { useLocation, useNavigate } from "react-router-dom";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
-toastr.options = {
-  closeButton: true,
-  progressBar: true,
-  timeOut: "3000",
-  extendedTimeOut: "1000",
-  preventDuplicates: true,
-  newestOnTop: true,
-};
+import DraggablePage from "./DraggablePage"; // Import DraggablePage component
 
 const AddBlankPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [numPages, setNumPages] = useState(null);
+  const [numPages, setNumPages] = useState(0); // Initialized to 0
   const [file, setFile] = useState(state?.file || null);
-  const [modifiedPdfBytes, setModifiedPdfBytes] = useState(null);
   const [modifiedPdfUrl, setModifiedPdfUrl] = useState(""); // URL for the modified PDF
-  const [blankPageCount, setBlankPageCount] = useState(0); // State for counting blank pages
+  const [pages, setPages] = useState([]); // Always an array
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,16 +28,11 @@ const AddBlankPage = () => {
     }
   }, [file, navigate]);
 
-  const onDocumentLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
-  };
-
   const initializePdf = () => {
     const reader = new FileReader();
     reader.onload = async () => {
       try {
         const existingPdfBytes = new Uint8Array(reader.result);
-        setModifiedPdfBytes(existingPdfBytes);
         const pdfDoc = await PDFDocument.load(existingPdfBytes, {
           ignoreEncryption: true,
         });
@@ -55,6 +40,8 @@ const AddBlankPage = () => {
         const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
         const pdfUrl = URL.createObjectURL(pdfBlob);
         setModifiedPdfUrl(pdfUrl);
+        setNumPages(pdfDoc.getPageCount()); // Correctly set the number of pages
+        setPages(Array.from({ length: pdfDoc.getPageCount() }, (_, index) => index + 1));
       } catch (e) {
         toastr.error("Failed to process the PDF. It might be protected.", "Error");
       }
@@ -62,53 +49,22 @@ const AddBlankPage = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  const addBlankPageToEndOfPDF = async () => {
-    try {
-      const pdfDoc = await PDFDocument.load(modifiedPdfBytes, {
-        ignoreEncryption: true,
-      });
-
-      // Add a blank page at the end
-      pdfDoc.addPage();
-
-      // Save the PDF
-      const pdfBytes = await pdfDoc.save();
-      const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      setModifiedPdfBytes(pdfBytes); // Update the modified PDF bytes
-      setModifiedPdfUrl(pdfUrl);
-      setBlankPageCount(blankPageCount); // Increase the blank page count
-
-      toastr.success("Blank page added successfully!", "Success");
-    } catch (error) {
-      toastr.error("Failed to add blank page to PDF.", "Error");
-    }
+  const addBlankPageToEndOfPDF = () => {
+    setPages([...pages, `blank_${pages.length + 1}`]);
+    toastr.success("Blank page added successfully!", "Success");
   };
 
   return (
     <div className="py-10 px-4 mb-30 font-Poppins w-full bg-[#f5f5f5] flex justify-center">
       <div className="flex flex-col">
-        {/* PDF Preview Section */}
+        {/* PDF Preview Section with Draggable Pages */}
         <div className="p-4 flex flex-wrap justify-center">
-          {modifiedPdfUrl && (
-            <Document
-              file={modifiedPdfUrl}
-              onLoadSuccess={onDocumentLoadSuccess}
-              className="text-center"
-            >
-              {numPages &&
-                Array.from(new Array(numPages + blankPageCount), (el, index) => (
-                  <div
-                    key={`page_${index + 1}`}
-                    className="rounded-xl bg-white border-2 border-white p-2 m-2 inline-block justify-center items-center shadow"
-                    style={{ width: "200px", height: "300px" }}
-                  >
-                    {index < numPages ? (
-                      <Page pageNumber={index + 1} width={180} />
-                    ) : ("")}
-                  </div>
-                ))}
-            </Document>
+          {modifiedPdfUrl && pages.length > 0 && (
+            <DraggablePage
+              fileDataURL={modifiedPdfUrl}
+              pages={pages}
+              setPages={setPages}
+            />
           )}
         </div>
 
