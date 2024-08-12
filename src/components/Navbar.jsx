@@ -19,7 +19,7 @@ const Navbar = () => {
         }
     };
  
- 
+
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
             <div className="container lg:justify-around justify-between flex items-center px-6 space-x-6 lg:w-[100vw]">
@@ -28,9 +28,10 @@ const Navbar = () => {
                 </div>
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold">
                     <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg" >Merge PDF</Link>
-                    {/* <Link to="/file", "/split" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</Link> */}
+               
                     <button onClick={() => handleNavigation('/file', '/split')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
-                    <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
+                    <button onClick={() => handleNavigation('/file', '/compress')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</button>
+           
                     <Link to="/convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
                     <Link to="/all-tools" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</Link>
                 </div>
@@ -54,9 +55,10 @@ const Navbar = () => {
             {isOpen && (
                 <div className="md:hidden">
                     <Link to="/merge" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg " onClick={toggleMenu}>Merge PDF</Link>
-                    {/* <Link to="/split" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Split PDF</Link> */}
+       
                     <button onClick={() => { handleNavigation('/file', '/split'); toggleMenu(); }} className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
-                    <Link to="/compress" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Compress PDF</Link>
+                    <button onClick={() => { handleNavigation('/file', '/compress'); toggleMenu(); }} className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</button>
+           
                     <Link to="/convert" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}> Convert PDF</Link>
                     <Link to="/all-tools" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>All PDF Tools</Link>
                 </div>

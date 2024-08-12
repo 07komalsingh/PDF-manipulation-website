@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument } from "pdf-lib";
 import group from "../assets/img_gup.png";
 import ValidatedFileInput from "./ValidatedFileInput";
- 
+
 const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
@@ -15,19 +14,23 @@ const FileUpload = () => {
   useEffect(() => {
     if (state && state.toolPath) {
       // Set the heading based on the toolPath
-      let toolName = '';
+      let toolName = "";
+   
       switch (state.toolPath) {
-        case '/split':
-          toolName = 'Split PDF';
+        case "/split":
+          toolName = "Split PDF";
           break;
-        case '/remove':
-          toolName = 'Remove Pages';
+        case "/remove":
+          toolName = "Remove Pages";
           break;
-        case '/add_blank':
-          toolName = 'Add Blank Page';
-          break;        
+        case "/add_blank":
+          toolName = "Add Blank Page";
+          break;
+        case "/compress":
+          toolName= "Compress PDF";
+          break;
         default:
-          toolName = 'Upload Document';
+          toolName = "Upload Document";
           break;
       }
       setHeading(toolName);
@@ -35,13 +38,12 @@ const FileUpload = () => {
       navigate("/");
     }
   }, [state, navigate]);
- 
+
   const onFileSelected = async (file) => {
     try {
       const arrayBuffer = await file.arrayBuffer();
       const pdfDoc = await PDFDocument.load(arrayBuffer);
- 
- 
+
       setSelectedFile(file);
       // Navigate to the appropriate route based on the tool selected
       if (state && state.toolPath) {
@@ -52,7 +54,7 @@ const FileUpload = () => {
       alert("An error occurred while processing the file.");
     }
   };
- 
+
   return (
     <div className="flex flex-col items-center justify-center bg-[#F5F5F5] pb-14">
       {!selectedFile ? (
@@ -76,7 +78,10 @@ const FileUpload = () => {
                     className="h-20 mt-4 w-full md:w-auto"
                   />
                 </div>
-                <ValidatedFileInput onFilesSelected={onFileSelected} tool={state?.toolPath} />
+                <ValidatedFileInput
+                  onFilesSelected={onFileSelected}
+                  tool={state?.toolPath}
+                />
               </div>
               <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
                 <h1 className="text-2xl">Choose your PDF file here</h1>
@@ -92,9 +97,6 @@ const FileUpload = () => {
     </div>
   );
 };
- 
+
 export default FileUpload;
- 
- 
- 
- 
+// ok so my problem is i want to do the same for compress pdf the way it is done for split pdf, also i want the structure of code the same way as SplitPdf 
