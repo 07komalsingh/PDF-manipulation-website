@@ -2,7 +2,8 @@
 import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Document, Page } from "react-pdf";
-const DraggablePage = ({ fileDataURL, pages = [], setPages }) => {
+
+const DraggablePage = ({ fileDataURL, pages, setPages }) => {
   const handleOnDragEnd = (result) => {
     const { destination, source } = result;
 
@@ -11,6 +12,7 @@ const DraggablePage = ({ fileDataURL, pages = [], setPages }) => {
     const reorderedPages = Array.from(pages);
     const [removed] = reorderedPages.splice(source.index, 1);
     reorderedPages.splice(destination.index, 0, removed);
+
     setPages(reorderedPages);
   };
 
@@ -25,7 +27,7 @@ const DraggablePage = ({ fileDataURL, pages = [], setPages }) => {
           >
             <Document file={fileDataURL}>
               {pages.map((pageNumber, index) => (
-                <Draggable key={index} draggableId={pageNumber.toString()} index={index}>
+                <Draggable key={pageNumber} draggableId={pageNumber.toString()} index={index}>
                   {(provided) => (
                     <div
                       ref={provided.innerRef}
@@ -34,16 +36,8 @@ const DraggablePage = ({ fileDataURL, pages = [], setPages }) => {
                       className="m-2 p-4 border-2 border-white bg-white inline-block rounded-3xl cursor-pointer shadow-lg"
                       style={{ ...provided.draggableProps.style }}
                     >
-                      {typeof pageNumber === "number" ? (
-                        <Page pageNumber={pageNumber} width={250} />
-                      ) : (
-                        <div className="w-[250px] h-[323px] flex justify-center items-center bg-gray-200">
-                          Blank Page
-                        </div>
-                      )}
-                      <div className="text-center mt-2 text-lg">
-                        {typeof pageNumber === "number" ? `Page ${pageNumber}` : "Blank Page"}
-                      </div>
+                      <Page pageNumber={pageNumber} width={250} />
+                      <div className="text-center mt-2 text-lg">{pageNumber}</div>
                     </div>
                   )}
                 </Draggable>
