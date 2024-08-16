@@ -1,167 +1,209 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { DndContext } from '@dnd-kit/core';
 import group from "../assets/img_gup.png";
+import { pdfjs } from 'react-pdf';
 import { PDFDocument } from 'pdf-lib';
-import ImagePopup from './ImagePopup';
-import PdfPreview from './PdfPreview';
-import ValidatedFileInput from './ValidatedFileInput'; // Import ValidatedFileInput
+import ValidatedFileInput from './ValidatedFileInput';
+import DraggableImage from './ImagePopup';
 
-const AddImageToPDF = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [pdfFile, setPdfFile] = useState(null);
-  const [pdfDataURL, setPdfDataURL] = useState(null);
-  const [pdfPreviewPages, setPdfPreviewPages] = useState([]);
-  const [updatedPdf, setUpdatedPdf] = useState(null);
-  const [pageRange, setPageRange] = useState({ from: 1, to: 1 });
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-  // Handle PDF file upload
-  const handlePdfUpload = async (file) => {
-    const arrayBuffer = await file.arrayBuffer();
-    setPdfFile(arrayBuffer);
+function AddImageTool() {
+    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfPages, setPdfPages] = useState({});
+    const [selectedImage, setSelectedImage] = useState({});
+    const [imagePosition, setImagePosition] = useState({});
+    const [imageSize, setImageSize] = useState({ width: 50, height: 50 });
+    const [errorMessage, setErrorMessage] = useState(null); // State for error message
+    const pdfRef = useRef([]);
 
-    // Convert array buffer to a Blob URL for previewing
-    const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    setPdfDataURL(url);
+    const handleFileSelected = async (file) => {
+        if (file) {
+            setPdfFile(file);
+            const pdfData = await file.arrayBuffer();
+            const pdf = await pdfjs.getDocument({ data: pdfData }).promise;
+            const totalPages = pdf.numPages;
 
-    // Set the page numbers for preview (e.g., all pages)
-    const pdfDoc = await PDFDocument.load(arrayBuffer);
-    const pageNumbers = Array.from({ length: pdfDoc.getPages().length }, (_, i) => i + 1);
-    setPdfPreviewPages(pageNumbers);
+            const renderPage = async (pageIndex) => {
+                const page = await pdf.getPage(pageIndex + 1);
+                const viewport = page.getViewport({ scale: 1 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
 
-    // Update the default page range to cover all pages
-    setPageRange({ from: 1, to: pageNumbers.length });
-  };
+                await page.render({ canvasContext: context, viewport }).promise;
+                return canvas.toDataURL();
+            };
 
-  // Handle opening the image popup
-  const handleOpenPopup = () => {
-    setIsPopupOpen(true);
-  };
+            const pages = await Promise.all(Array.from({ length: totalPages }, (_, i) => renderPage(i)));
+            const pagesMap = pages.reduce((acc, dataUrl, index) => {
+                acc[index] = dataUrl;
+                return acc;
+            }, {});
 
-  // Handle closing the image popup
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-  };
+            setPdfPages(pagesMap);
+        }
+    };
 
-  // Handle applying the image to the PDF
-  const handleApplyImage = async (imageFile, position) => {
-    const existingPdfBytes = pdfFile;
-    const pdfDoc = await PDFDocument.load(existingPdfBytes);
-    const pages = pdfDoc.getPages();
+    const handleImageSelection = (e, pageIndex) => {
+        const file = e.target.files[0];
 
-    // Load and embed the image in the PDF
-    const imageBytes = await fetch(imageFile).then((res) => res.arrayBuffer());
-    const image = await pdfDoc.embedPng(imageBytes);
+        if (file) {
+            // Validate that the file is a PNG
+            if (file.type !== 'image/png') {
+                alert('Please select a PNG file.');
+                return;
+            }
 
-    const { x, y } = position;
-    const imageWidth = 50;
-    const imageHeight = 50;
+            setErrorMessage(null); // Clear error message if validation passes
 
-    // Apply the image to the specified page range
-    for (let i = pageRange.from - 1; i < pageRange.to; i++) {
-      const page = pages[i];
-      page.drawImage(image, {
-        x,
-        y: page.getHeight() - y - imageHeight, // Flip y-axis for PDF
-        width: imageWidth,
-        height: imageHeight,
-      });
-    }
+            setSelectedImage(prevState => ({
+                ...prevState,
+                [pageIndex]: URL.createObjectURL(file)
+            }));
+            setImagePosition(prevState => ({
+                ...prevState,
+                [pageIndex]: { x: 0, y: 0 }
+            }));
+        }
+    };
 
-    // Save the updated PDF
-    const pdfBytes = await pdfDoc.save();
-    setUpdatedPdf(pdfBytes);
-  };
+    const handleDragEnd = (event, pageIndex) => {
+        const pageElement = pdfRef.current[pageIndex];
+        const pageWidth = pageElement.offsetWidth;
+        const pageHeight = pageElement.offsetHeight;
 
-  // Handle downloading the updated PDF
-  const handleDownloadPdf = () => {
-    const blob = new Blob([updatedPdf], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);           
-    link.download = 'updated.pdf';
-    link.click();
-  };
+        const newX = Math.max(0, Math.min(imagePosition[pageIndex].x + event.delta.x, pageWidth - imageSize.width));
+        const newY = Math.max(0, Math.min(imagePosition[pageIndex].y + event.delta.y, pageHeight - imageSize.height));
 
-  return (
-    <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
-      {!pdfFile ? (
-        <div className="mb-4 m-2">
-          <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
-            Add Image to PDF Pages
-          </h2>
-          <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
-            Upload Document
-          </h2>
-          <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
-            <div>
-              <h1 className="text-[#060808] font-poppins text-2xl font-normal text-center">
-                Upload PDF Attachments
-              </h1>
-              <div className="flex flex-col items-center">
-                <div>
-                  <img
-                    src={group}
-                    alt="PDF Icon"
-                    className="h-20 mt-4 w-full md:w-auto"
-                  />
+        setImagePosition(prevState => ({
+            ...prevState,
+            [pageIndex]: { x: newX, y: newY }
+        }));
+    };
+
+    const downloadPdfWithImage = async () => {
+        if (!pdfFile) return;
+
+        const pdfDoc = await PDFDocument.load(await pdfFile.arrayBuffer());
+
+        for (let i = 0; i < pdfDoc.getPageCount(); i++) {
+            if (selectedImage[i]) {
+                const page = pdfDoc.getPage(i);
+                const { width, height } = page.getSize();
+
+                const pageElement = pdfRef.current[i];
+                const pageWidth = pageElement.offsetWidth;
+                const pageHeight = pageElement.offsetHeight;
+
+                const posXPercent = imagePosition[i]?.x / pageWidth;
+                const posYPercent = imagePosition[i]?.y / pageHeight;
+                const widthPercent = imageSize.width / pageWidth;
+                const heightPercent = imageSize.height / pageHeight;
+
+                const adjustedX = posXPercent * width;
+                const adjustedY = posYPercent * height;
+                const adjustedWidth = widthPercent * width;
+                const adjustedHeight = heightPercent * height;
+
+                const imageBytes = await fetch(selectedImage[i]).then(res => res.arrayBuffer());
+                const image = await pdfDoc.embedPng(imageBytes);
+
+                page.drawImage(image, {
+                    x: adjustedX,
+                    y: height - adjustedY - adjustedHeight,
+                    width: adjustedWidth,
+                    height: adjustedHeight,
+                });
+            }
+        }
+
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'updated_pdf.pdf';
+        link.click();
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
+            {!pdfFile ? (
+                <div className="mb-4 m-2">
+                    <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
+                        Add Image to PDF Pages
+                    </h2>
+                    <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
+                        Upload Document
+                    </h2>
+                    <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
+                        <div>
+                            <h1 className="text-[#060808] font-poppins text-2xl font-normal text-center">
+                                Upload PDF Attachments
+                            </h1>
+                            <div className="flex flex-col items-center">
+                                <div>
+                                    <img
+                                        src={group}
+                                        alt="PDF Icon"
+                                        className="h-20 mt-4 w-full md:w-auto"
+                                    />
+                                </div>
+                                <ValidatedFileInput 
+                                    onFilesSelected={handleFileSelected}
+                                    tool="/add-image"
+                                />
+                                <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
+                                    <h1 className="text-2xl">Choose your PDF file here</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ValidatedFileInput 
-                  onFilesSelected={handlePdfUpload} 
-                  tool="/add-image" 
-                />
-                <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
-                  <h1 className="text-2xl">Choose your PDF file here</h1>
+            ) : (
+                <div className="pdf-preview">
+                    {Object.keys(pdfPages).map(index => (
+                        <div key={index} className="pdf-page" style={{ position: 'relative', margin:40 }}>
+                            <img src={pdfPages[index]} alt={`Page ${parseInt(index) + 1}`} ref={el => pdfRef.current[index] = el} />
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleImageSelection(e, parseInt(index))}
+                                style={{ display: 'none' }}
+                                id={`file-input-${index}`}
+                            />
+                            <label 
+                                htmlFor={`file-input-${index}`} 
+                                className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full`}
+                            >
+                               Choose Image
+                            </label>
+                            {selectedImage[index] && (
+                                <DndContext onDragEnd={(event) => handleDragEnd(event, parseInt(index))}>
+                                    <DraggableImage
+                                        src={selectedImage[index]}
+                                        position={imagePosition[index] || { x: 0, y: 0 }}
+                                        size={imageSize}
+                                    />
+                                </DndContext>
+                            )}
+                        </div>
+                    ))}
                 </div>
-              </div>
-            </div>
-          </div>
+            )}
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>} {/* Display error message */}
+            {pdfFile && (
+                <button 
+                    className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full mb-4"
+                    onClick={downloadPdfWithImage}
+                >
+                    Download PDF
+                </button>
+            )}
         </div>
-      ) : (
-        <>
-          <PdfPreview pdfDataURL={pdfDataURL} pdfPreviewPages={pdfPreviewPages} />
+    );
+}
 
-          <div className="mt-4">
-            <label className="mr-2">From:</label>
-            <input
-              type="number"
-              min="1"
-              max={pdfPreviewPages.length}
-              value={pageRange.from}
-              onChange={(e) => setPageRange({ ...pageRange, from: Number(e.target.value) })}
-              className="border rounded px-2 py-1 mr-4"
-            />
-            <label className="mr-2">To:</label>
-            <input
-              type="number"
-              min="1"
-              max={pdfPreviewPages.length}
-              value={pageRange.to}
-              onChange={(e) => setPageRange({ ...pageRange, to: Number(e.target.value) })}
-              className="border rounded px-2 py-1"
-            />
-          </div>
-
-          <button
-            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full mt-4"
-            onClick={handleOpenPopup}
-          >
-            Add Image
-          </button>
-          {isPopupOpen && (
-            <ImagePopup onClose={handleClosePopup} onApplyImage={handleApplyImage} />
-          )}
-          {updatedPdf && (
-            <button
-              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full mt-4"
-              onClick={handleDownloadPdf}
-            >
-              Download PDF
-            </button>
-          )}
-        </>
-      )}
-    </div>
-  );
-};
-
-export default AddImageToPDF;
+export default AddImageTool;
 
