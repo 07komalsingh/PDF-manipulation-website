@@ -8,77 +8,101 @@ import ValidatedFileInput from "./ValidatedFileInput";
 import DraggablePage from "./Draggable";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
- 
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
- 
+
 const Reorder = () => {
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const [numPages, setNumPages] = useState(0);
   const [pages, setPages] = useState([]);
+  const [originalPages, setOriginalPages] = useState([]);
   const [downloadUrl, setDownloadUrl] = useState(null);
- 
-  const handleFileSelected = (selectedFile) => {
+
+  const handleFileSelected = async (selectedFile) => {
     const reader = new FileReader();
     reader.onload = async (e) => {
       setFile(selectedFile);
       setFileDataURL(e.target.result);
- 
+
       try {
         const fileArrayBuffer = await selectedFile.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileArrayBuffer);
         const numPages = pdfDoc.getPageCount();
- 
-        if (numPages > 10) {
-          toastr.error("Selected PDF has more than 10 pages. Please select a PDF with 10 pages or fewer.", "Error");
+
+        if (numPages === 1) {
+          toastr.error("Please select a PDF with more than one page.");
           setFile(null);
           setFileDataURL(null);
           setNumPages(0);
           setPages([]);
+          setOriginalPages([]);
           return;
         }
- 
+
+        if (numPages > 10) {
+          toastr.error("Selected PDF has more than 10 pages.");
+          setFile(null);
+          setFileDataURL(null);
+          setNumPages(0);
+          setPages([]);
+          setOriginalPages([]);
+          return;
+        }
+
         setNumPages(numPages);
- 
-        // Create an array of pages
+
         const pageArray = Array.from({ length: numPages }, (_, index) => index + 1);
         setPages(pageArray);
+        setOriginalPages([...pageArray]);
       } catch (err) {
         console.error("Failed to load PDF:", err);
+        toastr.error("Failed to load PDF. Please try again.", "Error");
+        setFile(null);
+        setFileDataURL(null);
+        setNumPages(0);
+        setPages([]);
+        setOriginalPages([]);
       }
     };
     reader.readAsDataURL(selectedFile);
   };
- 
+
   const handleReorder = async () => {
     if (!file) {
       console.error("No file selected.");
       return;
     }
- 
+
+    // Check if the pages have been reordered
+    if (JSON.stringify(originalPages) === JSON.stringify(pages)) {
+      toastr.error("No reordering has been applied to the PDF.");
+      setDownloadUrl(null);
+      return;
+    }
+
     try {
       const fileArrayBuffer = await file.arrayBuffer();
       const pdfDoc = await PDFDocument.load(fileArrayBuffer);
- 
-      // Create a new PDF document
+
       const newPdfDoc = await PDFDocument.create();
- 
+
       for (let pageIndex of pages) {
         const [page] = await newPdfDoc.copyPages(pdfDoc, [pageIndex - 1]);
         newPdfDoc.addPage(page);
       }
- 
+
       const pdfBytes = await newPdfDoc.save();
       const url = window.URL.createObjectURL(new Blob([pdfBytes]));
       setDownloadUrl(url);
- 
+
       toastr.success("PDF reordered successfully!", "Success");
     } catch (err) {
       console.error("Failed to reorder PDF:", err);
       toastr.error("Failed to reorder PDF.", "Error");
     }
   };
- 
+
   return (
     <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
       {!file ? (
@@ -133,5 +157,6 @@ const Reorder = () => {
     </div>
   );
 };
- 
+
 export default Reorder;
+

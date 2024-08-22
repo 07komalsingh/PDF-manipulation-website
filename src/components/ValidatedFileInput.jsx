@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PDFDocument } from 'pdf-lib';
- 
+
 const ValidatedFileInput = ({ onFilesSelected, tool }) => {
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
- 
+
     if (selectedFile) {
       // Check if the file is a PDF
       if (selectedFile.type !== 'application/pdf') {
@@ -13,45 +13,45 @@ const ValidatedFileInput = ({ onFilesSelected, tool }) => {
         event.target.value = null;
         return;
       }
-      
-      // Validate for specific tools
-      if (tool === '/split' || tool === '/remove' ) {
 
-        try {
-          const fileArrayBuffer = await selectedFile.arrayBuffer();
-          const pdfDoc = await PDFDocument.load(fileArrayBuffer);
+      try {
+        const fileArrayBuffer = await selectedFile.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(fileArrayBuffer, { updateMetadata: false });
+
+        // Check for encryption/protection
+        if (pdfDoc.isEncrypted) {
+          alert('Protected files cannot be uploaded.');
+          event.target.value = null;
+          return;
+        }
+
+        if (tool === '/split' || tool === '/remove' || tool === '/reorder') {
           const pageCount = pdfDoc.getPageCount();
           if (pageCount <= 1) {
             alert('Please select a PDF with more than one page.');
             event.target.value = null;
             return;
           }
-        } catch (error) {
-          alert('Protected files cannot be uploaded.');
-          event.target.value = null;
-          return;
         }
-      }
- 
-      // Simple check for protected file (you can replace this with actual PDF protection check logic)
-      if (selectedFile.name.toLowerCase().includes('protected')) {
+
+      } catch (error) {
         alert('Protected files cannot be uploaded.');
         event.target.value = null;
         return;
       }
- 
+
       onFilesSelected(selectedFile);
       event.target.value = null;
     }
   };
- 
+
   const onChooseFileClick = () => {
     const fileInput = document.getElementById('file-input');
     if (fileInput) {
       fileInput.click();
     }
   };
- 
+
   return (
     <>
       <input
@@ -70,12 +70,10 @@ const ValidatedFileInput = ({ onFilesSelected, tool }) => {
     </>
   );
 };
- 
+
 ValidatedFileInput.propTypes = {
   onFilesSelected: PropTypes.func.isRequired,
   tool: PropTypes.string.isRequired,
 };
- 
-export default ValidatedFileInput;
- 
 
+export default ValidatedFileInput;
