@@ -22,7 +22,7 @@ function App() {
         <Route path="/file" element={<FileUpload />} />
         <Route path="/merge" element={<MergePDF />} />
         <Route path="/reorder" element={<Reorder />} />
-        <Route path="/add-image" element={<AddImage />} />
+        <Route path="/add-signature" element={<AddImage />} />
         <Route path="/split" element={<SplitPage />} />
         <Route path="/remove" element={<RemovePages />} />
         <Route path="/convert" element={<PdfToDocs />} />

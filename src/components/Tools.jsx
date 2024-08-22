@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import add_page from '../assets/img_add.png';
@@ -17,7 +16,7 @@ const tools = [
     { name: 'Remove Pages', icon: img_remove, path: '/file', toolPath: '/remove' },
     { name: 'Add Blank Page', icon: img_blankPage, path: '/file', toolPath: '/add_blank' },
     { name: 'PDF to Docs', icon: img_convert, path: '/convert' },
-    { name: 'Add Image', icon: add_page, path: '/add-image' },
+    { name: 'Add Signature', icon: add_page, path: '/add-signature' },
     { name: 'Compress PDF', icon: img_remove, path: '/file', toolPath: '/compress' },
 ];
  

@@ -11,10 +11,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 function AddImageTool() {
     const [pdfFile, setPdfFile] = useState(null);
     const [pdfPages, setPdfPages] = useState({});
-    const [selectedImage, setSelectedImage] = useState({});
-    const [imagePosition, setImagePosition] = useState({});
+    const [selectedImages, setSelectedImages] = useState({}); // Multiple images per page
+    const [imagePositions, setImagePositions] = useState({}); // Store positions for multiple images
     const [imageSize, setImageSize] = useState({ width: 50, height: 50 });
-    const [errorMessage, setErrorMessage] = useState(null); // State for error message
+    const [errorMessage, setErrorMessage] = useState(null);
     const pdfRef = useRef([]);
 
     const handleFileSelected = async (file) => {
@@ -50,7 +50,6 @@ function AddImageTool() {
         const file = e.target.files[0];
 
         if (file) {
-            // Validate that the file is a PNG
             if (file.type !== 'image/png') {
                 alert('Please select a PNG file.');
                 return;
@@ -58,38 +57,51 @@ function AddImageTool() {
 
             setErrorMessage(null); // Clear error message if validation passes
 
-            setSelectedImage(prevState => ({
+            const newImage = URL.createObjectURL(file);
+
+            setSelectedImages(prevState => ({
                 ...prevState,
-                [pageIndex]: URL.createObjectURL(file)
+                [pageIndex]: [...(prevState[pageIndex] || []), newImage] // Add the new image to the page's array
             }));
-            setImagePosition(prevState => ({
+
+            setImagePositions(prevState => ({
                 ...prevState,
-                [pageIndex]: { x: 0, y: 0 }
+                [pageIndex]: [...(prevState[pageIndex] || []), { x: 0, y: 0 }] // Set default position for the new image
             }));
         }
     };
 
-    const handleDragEnd = (event, pageIndex) => {
+    const handleDragEnd = (event, pageIndex, imageIndex) => {
         const pageElement = pdfRef.current[pageIndex];
         const pageWidth = pageElement.offsetWidth;
         const pageHeight = pageElement.offsetHeight;
 
-        const newX = Math.max(0, Math.min(imagePosition[pageIndex].x + event.delta.x, pageWidth - imageSize.width));
-        const newY = Math.max(0, Math.min(imagePosition[pageIndex].y + event.delta.y, pageHeight - imageSize.height));
+        const newX = Math.max(0, Math.min(imagePositions[pageIndex][imageIndex].x + event.delta.x, pageWidth - imageSize.width));
+        const newY = Math.max(0, Math.min(imagePositions[pageIndex][imageIndex].y + event.delta.y, pageHeight - imageSize.height));
 
-        setImagePosition(prevState => ({
-            ...prevState,
-            [pageIndex]: { x: newX, y: newY }
-        }));
+        setImagePositions(prevState => {
+            const updatedPositions = [...prevState[pageIndex]];
+            updatedPositions[imageIndex] = { x: newX, y: newY };
+            return {
+                ...prevState,
+                [pageIndex]: updatedPositions
+            };
+        });
     };
 
     const downloadPdfWithImage = async () => {
         if (!pdfFile) return;
+        const noImagesAdded = Object.values(selectedImages).every(pageImages => pageImages.length === 0);
+
+    if (noImagesAdded) {
+        setErrorMessage('No Signature have been added to the PDF.');
+        return;
+    }
 
         const pdfDoc = await PDFDocument.load(await pdfFile.arrayBuffer());
 
         for (let i = 0; i < pdfDoc.getPageCount(); i++) {
-            if (selectedImage[i]) {
+            if (selectedImages[i]) {
                 const page = pdfDoc.getPage(i);
                 const { width, height } = page.getSize();
 
@@ -97,25 +109,27 @@ function AddImageTool() {
                 const pageWidth = pageElement.offsetWidth;
                 const pageHeight = pageElement.offsetHeight;
 
-                const posXPercent = imagePosition[i]?.x / pageWidth;
-                const posYPercent = imagePosition[i]?.y / pageHeight;
-                const widthPercent = imageSize.width / pageWidth;
-                const heightPercent = imageSize.height / pageHeight;
+                for (let j = 0; j < selectedImages[i].length; j++) {
+                    const posXPercent = imagePositions[i][j]?.x / pageWidth;
+                    const posYPercent = imagePositions[i][j]?.y / pageHeight;
+                    const widthPercent = imageSize.width / pageWidth;
+                    const heightPercent = imageSize.height / pageHeight;
 
-                const adjustedX = posXPercent * width;
-                const adjustedY = posYPercent * height;
-                const adjustedWidth = widthPercent * width;
-                const adjustedHeight = heightPercent * height;
+                    const adjustedX = posXPercent * width;
+                    const adjustedY = posYPercent * height;
+                    const adjustedWidth = widthPercent * width;
+                    const adjustedHeight = heightPercent * height;
 
-                const imageBytes = await fetch(selectedImage[i]).then(res => res.arrayBuffer());
-                const image = await pdfDoc.embedPng(imageBytes);
+                    const imageBytes = await fetch(selectedImages[i][j]).then(res => res.arrayBuffer());
+                    const image = await pdfDoc.embedPng(imageBytes);
 
-                page.drawImage(image, {
-                    x: adjustedX,
-                    y: height - adjustedY - adjustedHeight,
-                    width: adjustedWidth,
-                    height: adjustedHeight,
-                });
+                    page.drawImage(image, {
+                        x: adjustedX,
+                        y: height - adjustedY - adjustedHeight,
+                        width: adjustedWidth,
+                        height: adjustedHeight,
+                    });
+                }
             }
         }
 
@@ -125,6 +139,7 @@ function AddImageTool() {
         link.href = URL.createObjectURL(blob);
         link.download = 'updated_pdf.pdf';
         link.click();
+        setErrorMessage(null); // Clear any previous error message
     };
 
     return (
@@ -132,7 +147,7 @@ function AddImageTool() {
             {!pdfFile ? (
                 <div className="mb-4 m-2">
                     <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
-                        Add Image to PDF Pages
+                        Add Signature to PDF Pages
                     </h2>
                     <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
                         Upload Document
@@ -164,7 +179,7 @@ function AddImageTool() {
             ) : (
                 <div className="pdf-preview">
                     {Object.keys(pdfPages).map(index => (
-                        <div key={index} className="pdf-page" style={{ position: 'relative', margin:40 }}>
+                        <div key={index} className="pdf-page" style={{ position: 'relative', margin: 40, textAlign: 'center' }}>
                             <img src={pdfPages[index]} alt={`Page ${parseInt(index) + 1}`} ref={el => pdfRef.current[index] = el} />
                             <input
                                 type="file"
@@ -172,38 +187,39 @@ function AddImageTool() {
                                 onChange={(e) => handleImageSelection(e, parseInt(index))}
                                 style={{ display: 'none' }}
                                 id={`file-input-${index}`}
+                                multiple
                             />
                             <label 
                                 htmlFor={`file-input-${index}`} 
-                                className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full`}
+                                className={`bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-14 rounded-full  mt-2 inline-block`}
                             >
                                Choose Image
                             </label>
-                            {selectedImage[index] && (
-                                <DndContext onDragEnd={(event) => handleDragEnd(event, parseInt(index))}>
+                            {selectedImages[index] && selectedImages[index].map((imageSrc, imgIdx) => (
+                                <DndContext key={imgIdx} onDragEnd={(event) => handleDragEnd(event, parseInt(index), imgIdx)}>
                                     <DraggableImage
-                                        src={selectedImage[index]}
-                                        position={imagePosition[index] || { x: 0, y: 0 }}
+                                        src={imageSrc}
+                                        position={imagePositions[index][imgIdx] || { x: 0, y: 0 }}
                                         size={imageSize}
                                     />
                                 </DndContext>
-                            )}
+                            ))}
                         </div>
                     ))}
                 </div>
             )}
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>} {/* Display error message */}
-            {pdfFile && (
-                <button 
-                    className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full mb-4"
-                    onClick={downloadPdfWithImage}
-                >
-                    Download PDF
-                </button>
-            )}
+            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            <button
+                onClick={downloadPdfWithImage}
+                className={`mt-4 ${!pdfFile ? 'hidden' : ''} bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full`}
+            >
+                Download PDF with Image
+            </button>
         </div>
     );
 }
 
 export default AddImageTool;
+
+
 

@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { PDFDocument } from "pdf-lib";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -15,6 +12,9 @@ const AddBlankPage = () => {
   const [file, setFile] = useState(state?.file || null);
   const [modifiedPdfUrl, setModifiedPdfUrl] = useState(""); // URL for the modified PDF
   const [pages, setPages] = useState([]); // Always an array
+  const [pdfDoc, setPdfDoc] = useState(null); // Store the PDFDocument object
+  const [isBlankPageAdded, setIsBlankPageAdded] = useState(false); // Track if a blank page has been added
+  const [pageSize, setPageSize] = useState(null); // Store the size of the pages
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,20 +28,26 @@ const AddBlankPage = () => {
     }
   }, [file, navigate]);
 
-  const initializePdf = () => {
+  const initializePdf = async () => {
     const reader = new FileReader();
     reader.onload = async () => {
       try {
         const existingPdfBytes = new Uint8Array(reader.result);
-        const pdfDoc = await PDFDocument.load(existingPdfBytes, {
+        const loadedPdfDoc = await PDFDocument.load(existingPdfBytes, {
           ignoreEncryption: true,
         });
-        const pdfBytes = await pdfDoc.save();
+        setPdfDoc(loadedPdfDoc); // Store the loaded PDFDocument
+        const pdfBytes = await loadedPdfDoc.save();
         const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
         const pdfUrl = URL.createObjectURL(pdfBlob);
         setModifiedPdfUrl(pdfUrl);
-        setNumPages(pdfDoc.getPageCount()); // Correctly set the number of pages
-        setPages(Array.from({ length: pdfDoc.getPageCount() }, (_, index) => index + 1));
+        setNumPages(loadedPdfDoc.getPageCount()); // Correctly set the number of pages
+        setPages(Array.from({ length: loadedPdfDoc.getPageCount() }, (_, index) => index + 1));
+
+        // Get the size of the first page
+        const firstPage = loadedPdfDoc.getPage(0);
+        const { width, height } = firstPage.getSize();
+        setPageSize({ width, height });
       } catch (e) {
         toastr.error("Failed to process the PDF. It might be protected.", "Error");
       }
@@ -49,9 +55,21 @@ const AddBlankPage = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  const addBlankPageToEndOfPDF = () => {
-    setPages([...pages, `blank_${pages.length + 1}`]);
-    toastr.success("Blank page added successfully!", "Success");
+  const handleAddBlankPage = async () => {
+    if (pdfDoc && pageSize) {
+      // Add the blank page with the same size as existing pages
+      const blankPage = pdfDoc.addPage([pageSize.width, pageSize.height]);
+      setPages([...pages, `blank_${pages.length + 1}`]);
+      setIsBlankPageAdded(true); // Indicate that a blank page has been added
+
+      // Save and update the modified PDF URL
+      const pdfBytes = await pdfDoc.save();
+      const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      setModifiedPdfUrl(pdfUrl);
+
+      toastr.success("Blank page added successfully!", "Success");
+    }
   };
 
   return (
@@ -69,7 +87,7 @@ const AddBlankPage = () => {
         </div>
 
         {/* Add Blank Page Button */}
-        <div className="p-4 font-Poppins flex flex-col items-center justify-center ">
+        <div className="p-4 font-Poppins flex flex-col items-center justify-center">
           <h2 className="text-3xl font-bold mb-4">Add Blank Page</h2>
           <hr className="w-[20%] mt-2" />
           <label className="font-semibold mt-6 mb-6 text-center">
@@ -77,13 +95,13 @@ const AddBlankPage = () => {
           </label>
 
           <button
-            onClick={addBlankPageToEndOfPDF}
+            onClick={handleAddBlankPage}
             className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold sm:py-2 flex justify-center py-2 sm:px-24 w-[250px] sm:w-fit rounded-full mt-7"
           >
             Add Blank Page
           </button>
 
-          {modifiedPdfUrl && (
+          {isBlankPageAdded && (
             <a
               href={modifiedPdfUrl}
               download="modified_pdf_with_blank_pages.pdf"
