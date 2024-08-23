@@ -12,6 +12,9 @@ import SplitPage from "./components/SplitPage";
 import RemovePages from "./components/RemovePages";
 import AddBlankPage from "./components/addBlankPage";
 import CompressPDF from "./components/compressPdf";
+import TermCon from "./components/TermCon";
+import Privacy from "./components/Privacy";
+import FAQ from "./components/Faq";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
         <Route path="/add_blank" element={<AddBlankPage />} />
         <Route path="/compress" element={<CompressPDF/>} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/term-and-con" element={<TermCon />} />
+        <Route path="/privacy" element={<Privacy/>} />
+        <Route path="/faq" element={<FAQ/>} />
       </Routes>
       <Footer />
     </Router>
