@@ -58,7 +58,7 @@ const AddBlankPage = () => {
   const handleAddBlankPage = async () => {
     if (pdfDoc && pageSize) {
       // Add the blank page with the same size as existing pages
-      const blankPage = pdfDoc.addPage([pageSize.width, pageSize.height]);
+      pdfDoc.addPage([pageSize.width, pageSize.height]);
       setPages([...pages, `blank_${pages.length + 1}`]);
       setIsBlankPageAdded(true); // Indicate that a blank page has been added
 
@@ -72,9 +72,30 @@ const AddBlankPage = () => {
     }
   };
 
+  const handleDownloadPdf = async () => {
+    if (pdfDoc) {
+      const reorderedPdfDoc = await PDFDocument.create();
+      for (const pageNumber of pages) {
+        if (typeof pageNumber === "number") {
+          const [copiedPage] = await reorderedPdfDoc.copyPages(pdfDoc, [pageNumber - 1]);
+          reorderedPdfDoc.addPage(copiedPage);
+        } else {
+          reorderedPdfDoc.addPage([pageSize.width, pageSize.height]);
+        }
+      }
+      const pdfBytes = await reorderedPdfDoc.save();
+      const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.download = "modified_pdf_with_blank_pages.pdf";
+      link.click();
+    }
+  };
+
   return (
     <div className="py-10 px-4 mb-30 font-Poppins w-full bg-[#f5f5f5] flex justify-center">
-      <div className="flex flex-col">
+      <div className="flex flex-col text-center">
         {/* PDF Preview Section with Draggable Pages */}
         <div className="p-4 flex flex-wrap justify-center">
           {modifiedPdfUrl && pages.length > 0 && (
@@ -102,13 +123,12 @@ const AddBlankPage = () => {
           </button>
 
           {isBlankPageAdded && (
-            <a
-              href={modifiedPdfUrl}
-              download="modified_pdf_with_blank_pages.pdf"
+            <button
+              onClick={handleDownloadPdf}
               className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold sm:py-2 py-2 sm:px-[65px] w-[250px] sm:w-fit text-center rounded-full mt-2"
             >
               Download Modified PDF
-            </a>
+            </button>
           )}
         </div>
       </div>
