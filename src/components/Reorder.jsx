@@ -5,7 +5,7 @@ import group from "../assets/img_gup.png";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import ValidatedFileInput from "./ValidatedFileInput";
-import DraggablePage from "./Draggable";
+import DraggablePage from './Draggable'
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 
@@ -104,13 +104,13 @@ const Reorder = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
+    <div className="flex flex-col items-center justify-center pb-9 bg-[#F5F5F5]">
       {!file ? (
-        <div className="mb-4 m-2">
-          <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
+        <div className="mb-4 ">
+          <h2 className="text-4xl font-semibold mb-16 text-center">
             Reorder PDF Pages
           </h2>
-          <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
+          <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">
             Upload Document
           </h2>
           <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
@@ -135,11 +135,12 @@ const Reorder = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex flex-col items-center sm:mb-[150px] mb-[35px]">
+        <div className="w-full flex flex-col justify-center sm:[10px] md:mb-[70px]">
           <DraggablePage fileDataURL={fileDataURL} pages={pages} setPages={setPages} />
+          <div className="flex flex-col justify-center items-center">
           <button
             onClick={handleReorder}
-            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 px-24 rounded-full mt-4"
+            className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold  py-2  rounded-full  text-center mt-4 w-[300px] h-11" 
           >
             Reorder
           </button>
@@ -147,11 +148,12 @@ const Reorder = () => {
             <a
               href={downloadUrl}
               download="reordered_file.pdf"
-              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] px-16 rounded-full mt-4"
+              className="bg-[#44B7BC] hover:bg-[#30aab1] text-white font-semibold py-2 sm:px-[65px] text-center  px-16 rounded-full mt-4 w-[300px] h-11"
             >
               Download PDF
             </a>
           )}
+          </div>
         </div>
       )}
     </div>
