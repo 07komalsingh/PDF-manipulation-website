@@ -18,12 +18,12 @@ const DraggablePage = ({ fileDataURL, pages, setPages }) => {
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <Droppable droppableId="droppable" direction="horizontal">
+      <Droppable droppableId="droppable" direction="horizontal" >
         {(provided) => (
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="w-full flex flex-wrap justify-center"
+            className="text-center"
           >
             <Document file={fileDataURL}>
               {pages.map((pageNumber, index) => (
@@ -33,10 +33,10 @@ const DraggablePage = ({ fileDataURL, pages, setPages }) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="m-2 p-4 border-2 border-white bg-white inline-block rounded-3xl cursor-pointer shadow-lg"
+                      className="m-3 p-4 border-2 border-white bg-white inline-block rounded-3xl cursor-pointer shadow-lg"
                       style={{ ...provided.draggableProps.style }}
                     >
-                      <Page pageNumber={pageNumber} width={250} />
+                      <Page pageNumber={pageNumber} width={200} />
                       <div className="text-center mt-2 text-lg">{pageNumber}</div>
                     </div>
                   )}
