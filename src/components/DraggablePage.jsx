@@ -51,15 +51,15 @@ const DraggablePage = ({ fileDataURL, pages = [], setPages }) => {
                         <Page
                           pageNumber={pageNumber}
                           onLoadSuccess={(page) => handleLoadSuccess(pageNumber, page)}
-                          width={pageSizes[pageNumber]?.width || 250}
-                          height={pageSizes[pageNumber]?.height || 323}
+                          width={pageSizes[pageNumber]?.width || 200}
+                          height={pageSizes[pageNumber]?.height || 300}
                         />
                       ) : (
                         <div
                           className="w-[250px] h-[323px] flex justify-center items-center bg-gray-200"
                           style={{
-                            width: pageSizes[1]?.width || 250, // Default size if not available
-                            height: pageSizes[1]?.height || 323,
+                            width: pageSizes[1]?.width || 200, // Default size if not available
+                            height: pageSizes[1]?.height || 300,
                           }}
                         >
                           Blank Page

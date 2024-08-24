@@ -50,31 +50,37 @@ function AddImageTool() {
 
   const handleImageSelection = (e, pageIndex) => {
     const files = Array.from(e.target.files);
+    const invalidFiles = files.filter((file) => file.type !== "image/png");
 
-    files.forEach((file) => {
-      if (file.type !== "image/png") {
-        alert("Please select a PNG file.");
-        return;
-      }
+    if (invalidFiles.length > 0) {
+      setErrorMessage(alert("Please select only PNG files."));
+      return;
+    }
+    
 
+    const newImages = files.map((file) => {
       const uniqueKey = `${file.name}-${Date.now()}-${Math.random()}`; // Generate a unique key for each image
-      const newImage = {
+      return {
         src: URL.createObjectURL(file),
         key: uniqueKey,
       };
-
-      setSelectedImages((prevState) => ({
-        ...prevState,
-        [pageIndex]: [...(prevState[pageIndex] || []), newImage], // Add the new image with a unique key
-      }));
-
-      setImagePositions((prevState) => ({
-        ...prevState,
-        [pageIndex]: [...(prevState[pageIndex] || []), { x: 0, y: 0 }], // Set default position for the new image
-      }));
     });
 
-    // Reset the file input value to allow re-selection of the same file
+    setSelectedImages((prevState) => ({
+      ...prevState,
+      [pageIndex]: [...(prevState[pageIndex] || []), ...newImages], // Add the new images
+    }));
+
+    setImagePositions((prevState) => ({
+      ...prevState,
+      [pageIndex]: [
+        ...(prevState[pageIndex] || []),
+        ...newImages.map(() => ({ x: 0, y: 0 })), // Set default position for each new image
+      ],
+    }));
+
+    // Clear the error message and reset the file input value to allow re-selection
+    setErrorMessage(null);
     e.target.value = "";
   };
 
@@ -110,6 +116,7 @@ function AddImageTool() {
 
   const downloadPdfWithImage = async () => {
     if (!pdfFile) return;
+
     const noImagesAdded = Object.values(selectedImages).every(
       (pageImages) => pageImages.length === 0
     );
