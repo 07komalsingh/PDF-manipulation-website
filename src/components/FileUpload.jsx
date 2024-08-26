@@ -5,6 +5,7 @@ import group from "../assets/img_gup.png";
 import ValidatedFileInput from "./ValidatedFileInput";
 
 const FileUpload = () => {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();

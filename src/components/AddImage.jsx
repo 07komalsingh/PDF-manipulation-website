@@ -9,6 +9,7 @@ import DraggableImage from "./ImagePopup";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function AddImageTool() {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfPages, setPdfPages] = useState({});
   const [selectedImages, setSelectedImages] = useState({}); // Multiple images per page

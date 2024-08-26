@@ -16,6 +16,7 @@ toastr.options = {
 };
 
 function CompressPDF() {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const { state } = useLocation();
   const [pdfDoc, setPdfDoc] = useState(null);
   const [numPages, setNumPages] = useState(null);

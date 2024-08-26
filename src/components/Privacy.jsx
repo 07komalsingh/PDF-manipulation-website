@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Privacy = () => {
+  window. scrollTo({ top:0, behavior: 'auto' });
   return (
     < >
       <div className="m-4 p-4 text-black font-serif text-base  bg-white text-center">
@@ -12,7 +13,7 @@ const Privacy = () => {
       <div className="m-4 p-4 text-black font-serif text-base bg-white text-center">
         <p className="m-0 p-0 font-normal">
           <span className="text-lg leading-6 font-bold">Last Updated:</span>
-          <span className="text-lg leading-6"> 23/08/2024</span>
+          <span className="text-lg leading-6">23/08/2024</span>
         </p>
       </div>
 
@@ -136,7 +137,7 @@ const Privacy = () => {
             <span className="font-bold">Email:</span> [Your Support Email]
           </li>
           <li className="m-0 p-0 text-base">
-            <span className="font-bold">Website:</span> https://easydocuments.com/
+            <span className="font-bold">Website:</span> https://easydocoments.com/
           </li>
         </ul>
       </div>

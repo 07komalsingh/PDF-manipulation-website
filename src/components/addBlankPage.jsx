@@ -6,6 +6,7 @@ import "toastr/build/toastr.min.css";
 import DraggablePage from "./DraggablePage"; // Import DraggablePage component
 
 const AddBlankPage = () => {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const navigate = useNavigate();
   const { state } = useLocation();
   const [numPages, setNumPages] = useState(0); // Initialized to 0
