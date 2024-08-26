@@ -17,7 +17,7 @@ function Faq() {
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg font-bold">
-                  What types of data does Easy Documents collect?
+                  What types of data does Easy Docoments collect?
                 </span>
               </p>
             </li>
@@ -25,7 +25,7 @@ function Faq() {
               <p className="font-normal text-left">
                 <span className="text-base">
                   In addition to basic usage statistics and crash reports needed
-                  for app functionality, Easy Documents offers users the
+                  for app functionality, Easy Docoments offers users the
                   opportunity to&nbsp;
                   <span>participate</span>&nbsp;in surveys to earn money. When
                   you choose to&nbsp;
@@ -44,14 +44,14 @@ function Faq() {
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg font-bold">
-                  Does Easy Documents access the content of my PDFs?
+                  Does Easy Docoments access the content of my PDFs?
                 </span>
               </p>
             </li>
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg">
-                  No, Easy Documents does not access, store, or share the
+                  No, Easy Docoments does not access, store, or share the
                   content of your PDFs. All file processing&nbsp;
                   <span>is done</span>&nbsp;locally on your device, ensuring
                   your documents&nbsp;
@@ -72,7 +72,7 @@ function Faq() {
                 <span className="text-lg">
                   We do not share your personal data with third parties for
                   marketing or other purposes. Any data we collect&nbsp;
-                  <span>is solely used</span>&nbsp;to improve the app’s
+                  <span>is solely used</span>&nbsp;to improve the app's
                   functionality and user experience.
                 </span>
               </p>
@@ -81,7 +81,7 @@ function Faq() {
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg font-bold">
-                  How does Easy Documents protect my data?
+                  How does Easy Docoments protect my data?
                 </span>
               </p>
             </li>
@@ -101,7 +101,7 @@ function Faq() {
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg font-bold">
-                  Does Easy Documents track my activity?
+                  Does Easy Docoments track my activity?
                 </span>
               </p>
             </li>
@@ -119,14 +119,14 @@ function Faq() {
             <li className="text-lg font-serif">
               <p className="font-normal text-left">
                 <span className="text-lg font-bold">
-                  Can I use Easy Documents without sharing any data?
+                  Can I use Easy Docoments without sharing any data?
                 </span>
               </p>
             </li>
             <li className="text-base font-serif">
               <p className="font-normal text-left">
                 <span>
-                  Yes, Easy Documents&nbsp;
+                  Yes, Easy Docoments&nbsp;
                   <span>can be used&nbsp;</span>
                   <span>
                     without sharing any personal information. Some features,
@@ -149,7 +149,7 @@ function Faq() {
                 <span className="font-normal text-base">delete</span>
                 <span className="font-normal text-base">
                   {" "}
-                  any data associated with Easy Documents by uninstalling the
+                  any data associated with Easy Docoments by uninstalling the
                   app. Any files created or edited using the app are stored on
                   your device and{" "}
                 </span>
@@ -159,7 +159,7 @@ function Faq() {
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-bold text-base">
-                Is my data stored on Easy Documents’ servers?
+                Is my data stored on Easy Documents' servers?
               </p>
             </li>
             <li className="m-0 p-0 text-base font-serif">
@@ -172,7 +172,7 @@ function Faq() {
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-bold text-base">
-                Does Easy Documents require an internet connection?
+                Does Easy Docoments require an internet connection?
               </p>
             </li>
             <li className="m-0 p-0 text-base font-serif">
@@ -191,13 +191,13 @@ function Faq() {
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-bold text-base">
-                How does Easy Documents handle permissions?
+                How does Easy Docoments handle permissions?
               </p>
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-normal">
                 <span className="font-normal text-base">
-                  Easy Documents requests only the necessary permissions for the
+                  Easy Docoments requests only the necessary permissions for the
                   app to function. For example, we may ask for storage access to
                   manage your PDFs. We do not access any data beyond what is{" "}
                 </span>
@@ -209,13 +209,13 @@ function Faq() {
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-bold text-base">
-                What is Easy Documents’ stance on data privacy?
+                What is Easy Documents' stance on data privacy?
               </p>
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-normal">
                 <span className="font-bold text-base">
-                  Easy Documents is committed to protecting your privacy and
+                  Easy Docoments is committed to protecting your privacy and
                   ensuring your data{" "}
                 </span>
                 <span className="font-normal text-base">remains</span>
@@ -228,7 +228,7 @@ function Faq() {
             </li>
             <li className="m-0 p-0 text-base font-serif">
               <p className="m-0 p-0 font-bold text-base">
-                Does Easy Documents collect personal information?
+                Does Easy Docoments collect personal information?
               </p>
             </li>
             <li className="m-0 p-0 text-base font-serif">
@@ -247,7 +247,7 @@ function Faq() {
             <li className="mb-0 text-base font-serif">
               <p className="m-0 p-0 text-left text-black">
                 <span className="font-bold">
-                  Why does Easy Documents collect any data at all?
+                  Why does Easy Docoments collect any data at all?
                 </span>
                 <span>
                   The data we collect helps us improve app functionality, fix
@@ -270,10 +270,10 @@ function Faq() {
             <li className="mb-0 text-base font-serif">
               <p className="m-0 p-0 text-left text-black">
                 <span className="font-bold">
-                  How does Easy Documents comply with GDPR?
+                  How does Easy Docoments comply with GDPR?
                 </span>
                 <span>
-                  Easy Documents complies with GDPR by ensuring all data
+                  Easy Docoments complies with GDPR by ensuring all data
                   processing is lawful, transparent, and limited to what is
                   necessary. Users have the right to access, correct, or delete
                   their data.
@@ -283,7 +283,7 @@ function Faq() {
             <li className="mb-0 text-base font-serif">
               <p className="m-0 p-0 text-left text-black">
                 <span className="font-bold">
-                  What data does Easy Documents need to function properly?
+                  What data does Easy Docoments need to function properly?
                 </span>
                 <span>
                   We require minimal data such as storage access for managing
@@ -306,7 +306,7 @@ function Faq() {
               <li className="mb-0 text-base font-serif">
                 <p className="m-0 p-0 text-left text-black">
                   <span className="font-bold">
-                    How does Easy Documents handle user consent for data
+                    How does Easy Docoments handle user consent for data
                     collection?
                   </span>
                   <span>
@@ -320,7 +320,7 @@ function Faq() {
               <li className="mb-0  text-base font-serif e">
                 <p className="m-0 p-0 font-normal normal-case text-left  text-black">
                   <span className="text-base font-bold">
-                    Are my interactions with Easy Documents recorded?
+                    Are my interactions with Easy Docoments recorded?
                   </span>
                   <span className="text-base ">
                     No, your interactions are not recorded or monitored. We only
@@ -333,11 +333,11 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 font-normal normal-case align-baseline text-left indent-0 bg-transparent text-black">
                   <span className="text-base leading-6 font-bold">
-                    Does Easy Documents collect data when I’m offline?
+                    Does Easy Docoments collect data when I'm offline?
                   </span>
                   <span className="text-base leading-6">
-                    No, data collection only occurs when you’re online, and even
-                    then, it’s minimal and primarily related to app performance.
+                    No, data collection only occurs when you're online, and even
+                    then, it's minimal and primarily related to app performance.
                   </span>
                 </p>
               </li>
@@ -355,10 +355,10 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 font-normal normal-case align-baseline text-left indent-0 bg-transparent text-black">
                   <span className="text-base leading-6 font-bold">
-                    Does Easy Documents have access to my files?
+                    Does Easy Docoments have access to my files?
                   </span>
                   <span className="text-base leading-6">
-                    Easy Documents only accesses files when you actively open
+                    Easy Docoments only accesses files when you actively open
                     them within the app. We do not store or monitor these files.
                   </span>
                 </p>
@@ -368,7 +368,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif ">
                 <p className="m-0 p-0 font-normal normal-case align-baseline text-left indent-0 bg-transparent text-black">
                   <span className="text-base leading-6 font-bold">
-                    Are my PDF files stored on Easy Documents’ servers?
+                    Are my PDF files stored on Easy Documents' servers?
                   </span>
                   <span className="text-base leading-6">
                     No, all files remain on your device unless you choose to
@@ -381,7 +381,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif ">
                 <p className="m-0 p-0 font-normal normal-case align-baseline text-left indent-0 bg-transparent text-black">
                   <span className="text-base leading-6 font-bold">
-                    How does Easy Documents process my files?
+                    How does Easy Docoments process my files?
                   </span>
                   <span className="text-base leading-6">
                     All file processing occurs locally on your device, ensuring
@@ -395,7 +395,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 font-normal normal-case align-baseline text-left indent-0 bg-transparent text-black">
                   <span className="text-base leading-6 font-bold">
-                    Can Easy Documents read the content of my PDFs?
+                    Can Easy Docoments read the content of my PDFs?
                   </span>
                   <span className="text-base leading-6">
                     No, the content of your PDFs is not accessible to us. All
@@ -411,8 +411,8 @@ function Faq() {
                     Is the content of my documents encrypted?
                   </span>
                   <span className="text-base leading-6">
-                    Yes, any data stored on your device through Easy Documents
-                    is protected by your device’s encryption.
+                    Yes, any data stored on your device through Easy Docoments
+                    is protected by your device's encryption.
                   </span>
                 </p>
               </li>
@@ -435,11 +435,11 @@ function Faq() {
               <li className=" text-base font-serif">
                 <p className="m-0 p-0 text-black bg-transparent text-left">
                   <span className="font-bold text-base leading-6">
-                    Does Easy Documents create backups of my files?
+                    Does Easy Docoments create backups of my files?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    Easy Documents does not create backups unless you connect to
+                    Easy Docoments does not create backups unless you connect to
                     a cloud service like Google Drive. You control all backups.
                   </span>
                 </p>
@@ -450,7 +450,7 @@ function Faq() {
                 <p className="m-0 p-0 text-black bg-transparent text-left">
                   <span className="font-bold text-base leading-6">
                     Are my files <span className="font-bold">deleted</span>{" "}
-                    after I uninstall Easy Documents?
+                    after I uninstall Easy Docoments?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
@@ -466,11 +466,11 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 text-black bg-transparent text-left">
                   <span className="font-bold text-base leading-6">
-                    Can Easy Documents share my files with others?
+                    Can Easy Docoments share my files with others?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    Easy Documents does not share your files without your
+                    Easy Docoments does not share your files without your
                     explicit action. You control all sharing through the app.
                   </span>
                 </p>
@@ -484,7 +484,7 @@ function Faq() {
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    No, Easy Documents does not store a history of your document
+                    No, Easy Docoments does not store a history of your document
                     edits or views.
                   </span>
                 </p>
@@ -503,7 +503,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 text-black bg-transparent text-left">
                   <span className="font-bold text-base leading-6">
-                    What security measures does Easy Documents use to protect my
+                    What security measures does Easy Docoments use to protect my
                     data?
                   </span>
                   <span className="text-base leading-6">
@@ -518,7 +518,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif">
                 <p className="m-0 p-0 text-black bg-transparent text-left">
                   <span className="font-bold text-base leading-6">
-                    How does Easy Documents ensure{" "}
+                    How does Easy Docoments ensure{" "}
                     <span className="font-bold">my data</span> isn't accessed by
                     unauthorized parties?
                   </span>
@@ -534,7 +534,7 @@ function Faq() {
               <li className="text-base font-serif">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="font-bold">
-                    Is data transmitted to Easy Documents secure?
+                    Is data transmitted to Easy Docoments secure?
                   </span>
                   <span>
                     {" "}
@@ -548,7 +548,7 @@ function Faq() {
               <li className="text-base font-serif">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="font-bold">
-                    Does Easy Documents protect against data breaches?
+                    Does Easy Docoments protect against data breaches?
                   </span>
                   <span>
                     {" "}
@@ -562,7 +562,7 @@ function Faq() {
               <li className="text-base font-serif">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="font-bold">
-                    How often is Easy Documents’ security updated?
+                    How often is Easy Documents' security updated?
                   </span>
                   <span>
                     {" "}
@@ -576,7 +576,7 @@ function Faq() {
               <li className="text-base font-serif">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="font-bold">
-                    Does Easy Documents use third-party services?
+                    Does Easy Docoments use third-party services?
                   </span>
                   <span>
                     {" "}
@@ -596,7 +596,7 @@ function Faq() {
                   </span>
                   <span>
                     {" "}
-                    No, Easy Documents does not store passwords or sensitive
+                    No, Easy Docoments does not store passwords or sensitive
                     personal information.
                   </span>
                 </p>
@@ -606,7 +606,7 @@ function Faq() {
               <li className="text-base font-serif">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="font-bold">
-                    How does Easy Documents handle security vulnerabilities?
+                    How does Easy Docoments handle security vulnerabilities?
                   </span>
                   <span>
                     {" "}
@@ -639,7 +639,7 @@ function Faq() {
                   </span>
                   <span>
                     {" "}
-                    If you connect Easy Documents to a cloud service, we
+                    If you connect Easy Docoments to a cloud service, we
                     recommend enabling 2FA on that service for added security.
                   </span>
                 </p>
@@ -658,7 +658,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Why does Easy Documents request storage permissions?
+                    Why does Easy Docoments request storage permissions?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
@@ -672,7 +672,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Can I limit the permissions Easy Documents has?
+                    Can I limit the permissions Easy Docoments has?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
@@ -686,11 +686,11 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Does Easy Documents request unnecessary permissions?
+                    Does Easy Docoments request unnecessary permissions?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    No, Easy Documents only requests the minimum permissions
+                    No, Easy Docoments only requests the minimum permissions
                     required for essential functions.
                   </span>
                 </p>
@@ -705,7 +705,7 @@ function Faq() {
                   <span className="text-base leading-6">
                     {" "}
                     Yes, you can revoke permissions at any time through your
-                    device’s settings.
+                    device's settings.
                   </span>
                 </p>
               </li>
@@ -714,11 +714,11 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Does Easy Documents use location data?
+                    Does Easy Docoments use location data?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    No, Easy Documents does not request or use location data.
+                    No, Easy Docoments does not request or use location data.
                   </span>
                 </p>
               </li>
@@ -727,7 +727,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    How can I control what data Easy Documents collects?
+                    How can I control what data Easy Docoments collects?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
@@ -741,7 +741,7 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Does Easy Documents need an internet connection to work?
+                    Does Easy Docoments need an internet connection to work?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
@@ -755,11 +755,11 @@ function Faq() {
               <li className="m-0 p-0 text-base font-serif align-baseline">
                 <p className="m-0 p-0 font-normal text-left">
                   <span className="text-base leading-6 font-bold">
-                    Can I delete my account and data from Easy Documents?
+                    Can I delete my account and data from Easy Docoments?
                   </span>
                   <span className="text-base leading-6">
                     {" "}
-                    Since Easy Documents doesn’t require an account, you only
+                    Since Easy Docoments doesn't require an account, you only
                     need to uninstall the app to remove it. Files remain on your
                     device.
                   </span>
@@ -770,7 +770,7 @@ function Faq() {
               <li>
                 <p className="text-base font-normal text-black">
                   <span className="font-bold">
-                    What happens to my data if I uninstall Easy Documents?
+                    What happens to my data if I uninstall Easy Docoments?
                   </span>
                   <span>
                     {" "}
@@ -785,7 +785,7 @@ function Faq() {
               <li>
                 <p className="text-base font-normal text-black">
                   <span className="font-bold">
-                    Can I export my data from Easy Documents?
+                    Can I export my data from Easy Docoments?
                   </span>
                   <span>
                     {" "}
@@ -814,11 +814,11 @@ function Faq() {
               <li>
                 <p className="text-base font-normal text-black">
                   <span className="font-bold">
-                    Is Easy Documents compliant with COPPA?
+                    Is Easy Docoments compliant with COPPA?
                   </span>
                   <span>
                     {" "}
-                    Yes, Easy Documents complies with COPPA by not collecting
+                    Yes, Easy Docoments complies with COPPA by not collecting
                     personal data from children under 13 without parental
                     consent.
                   </span>
@@ -833,11 +833,11 @@ function Faq() {
               <li>
                 <p className="text-base font-normal text-black">
                   <span className="font-bold">
-                    How does Easy Documents comply with CCPA?
+                    How does Easy Docoments comply with CCPA?
                   </span>
                   <span>
                     {" "}
-                    Easy Documents complies with CCPA by providing transparency
+                    Easy Docoments complies with CCPA by providing transparency
                     about data collection and offering users the right to
                     opt-out.
                   </span>
@@ -852,7 +852,7 @@ function Faq() {
               <li>
                 <p className="text-base font-normal text-black">
                   <span className="font-bold">
-                    How does Easy Documents handle legal requests for data?
+                    How does Easy Docoments handle legal requests for data?
                   </span>
                   <span>
                     {" "}
@@ -866,7 +866,7 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    Does Easy Documents transfer data internationally?
+                    Does Easy Docoments transfer data internationally?
                   </span>
                   <span className="text-base">
                     {" "}
@@ -880,7 +880,7 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    Does Easy Documents have a privacy policy?
+                    Does Easy Docoments have a privacy policy?
                   </span>
                   <span className="text-base">
                     {" "}
@@ -894,7 +894,7 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    Can I review the privacy practices of Easy Documents?
+                    Can I review the privacy practices of Easy Docoments?
                   </span>
                   <span className="text-base">
                     {" "}
@@ -908,7 +908,7 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    How does Easy Documents handle changes to the privacy
+                    How does Easy Docoments handle changes to the privacy
                     policy?
                   </span>
                   <span className="text-base">
@@ -923,11 +923,11 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    Is Easy Documents HIPAA compliant?
+                    Is Easy Docoments HIPAA compliant?
                   </span>
                   <span className="text-base">
                     {" "}
-                    While Easy Documents is secure, it{" "}
+                    While Easy Docoments is secure, it{" "}
                     <span className="font-normal">is not certified</span> for
                     handling Protected Health Information (PHI) under HIPAA.
                   </span>
@@ -938,7 +938,7 @@ function Faq() {
               <li className="text-lg font-serif mb-2">
                 <p className="text-black font-normal text-base">
                   <span className="font-bold text-lg">
-                    What are my rights under GDPR with Easy Documents?
+                    What are my rights under GDPR with Easy Docoments?
                   </span>
                   <span className="text-base">
                     {" "}

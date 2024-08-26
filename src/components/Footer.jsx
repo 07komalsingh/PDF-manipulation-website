@@ -14,12 +14,12 @@ const Footer = () => {
             <h2 className="text-lg font-bold mb-4">Home</h2>
             <ul>
               <li className="mb-2">
-                <a href="#" className="hover:underline font-Poppins">
+                <a href="" className="hover:underline font-Poppins">
                   Features
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:underline font-Poppins">
+                <a href="" className="hover:underline font-Poppins">
                   Tools
                 </a>
               </li>
@@ -29,17 +29,17 @@ const Footer = () => {
             <h2 className="text-lg font-bold mb-4">Product</h2>
             <ul>
               <li className="mb-2">
-                <a href="#" className="hover:underline font-Poppins">
+                <a href="" className="hover:underline font-Poppins">
                   Xbinlegal
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:underline font-Poppins">
+                <a href="" className="hover:underline font-Poppins">
                   Student Corner
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:underline font-Poppins">
+                <a href="" className="hover:underline font-Poppins">
                   Kabadi Jee
                 </a>
               </li>
