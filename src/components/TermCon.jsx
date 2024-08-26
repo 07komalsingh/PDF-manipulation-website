@@ -1,6 +1,7 @@
 import React from 'react'
 
 function TermCon() {
+  window. scrollTo({ top:0, behavior: 'auto' });
   return (
     <div className="flex justify-center items-start min-h-screen p-4">
       <div className="w-full max-w-3xl p-6 bg-white shadow-sm rounded-lg">

@@ -12,6 +12,7 @@ import "toastr/build/toastr.min.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const Reorder = () => {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const [numPages, setNumPages] = useState(0);

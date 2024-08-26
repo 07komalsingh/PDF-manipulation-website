@@ -11,6 +11,7 @@ import ValidatedFileInput from "./ValidatedFileInput"; // Import the ValidatedFi
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 function PdfToDocs() {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
@@ -71,14 +72,14 @@ function PdfToDocs() {
   return (
     <div className="flex flex-col items-center justify-center pb-14 bg-[#F5F5F5]">
       {!file ? (
-        <div className="mb-4 m-2">
-          <h2 className="text-4xl font-semibold mb-16 p-5 text-center">
+        <div className="mb-4">
+          <h2 className="text-4xl font-semibold mb-16 p-0 mt-6 text-center">
             PDF to DOCs Converter
           </h2>
-          <h2 className="text-2xl font-semibold font-poppins mb-7 text-center">
+          <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">
             Upload Document
           </h2>
-          <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
+          <div className="bg-[#E0F2F3B8] border-2 border-[#44B7BC] m-2 rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center">
             <div>
               <h1 className="text-[#060808] font-poppins text-2xl font-normal text-center">
                 Upload PDF Attachments

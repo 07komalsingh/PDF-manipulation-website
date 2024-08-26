@@ -23,6 +23,7 @@ toastr.options = {
 };
 
 const Adding = () => {
+  window. scrollTo({ top:0, behavior: 'auto' });
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [fileURLs, setFileURLs] = useState([]);
   const [mergedPDFUrl, setMergedPDFUrl] = useState(null);

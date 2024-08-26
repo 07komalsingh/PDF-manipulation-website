@@ -29,17 +29,17 @@ const Footer = () => {
             <h2 className="text-lg font-bold mb-4">Product</h2>
             <ul>
               <li className="mb-2">
-                <a href="" className="hover:underline font-Poppins">
+                <a href="https://xbinlegal.pandoconsultants.com/" className="hover:underline font-Poppins" target="_blank">
                   Xbinlegal
                 </a>
               </li>
               <li className="mb-2">
-                <a href="" className="hover:underline font-Poppins">
+                <a href="https://studentscorners.com/" className="hover:underline font-Poppins" target="_blank">
                   Student Corner
                 </a>
               </li>
               <li className="mb-2">
-                <a href="" className="hover:underline font-Poppins">
+                <a href="https://kabadijee.com/" className="hover:underline font-Poppins" target="_blank">
                   Kabadi Jee
                 </a>
               </li>
