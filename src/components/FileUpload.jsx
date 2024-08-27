@@ -30,6 +30,10 @@ const FileUpload = () => {
         case "/compress":
           toolName= "Compress PDF";
           break;
+          case "/read":
+          toolName= "Read PDF";
+          break;
+
         default:
           toolName = "Upload Document";
           break;
@@ -60,7 +64,7 @@ const FileUpload = () => {
     <div className="flex flex-col items-center justify-center bg-[#F5F5F5] pb-14">
       {!selectedFile ? (
         <div className="mb-4">
-          <h2 className="text-4xl font-semibold mb-16 p-0 mt-4 text-center ">
+          <h2 className="text-4xl font-semibold mb-14 p-0 mt-4 text-center ">
             {heading}
           </h2>
           <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">
@@ -98,6 +102,5 @@ const FileUpload = () => {
     </div>
   );
 };
-
 export default FileUpload;
-// ok so my problem is i want to do the same for compress pdf the way it is done for split pdf, also i want the structure of code the same way as SplitPdf 
+

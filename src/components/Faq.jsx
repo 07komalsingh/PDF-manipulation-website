@@ -248,29 +248,33 @@ const faqs = [
   },
 
 ];
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Import icons for dropdown
 const Faq=()=> {
   const [openIndex, setOpenIndex] = useState(null);
 
+  useEffect(() => {
+    // Scroll to the top when the component is mounted
+    window.scrollTo(0, 0);
+  }, []); 
+
   const handleToggle = index => {
     setOpenIndex(openIndex === index ? null : index);
   };
-  window. scrollTo({ top:0, behavior: 'auto' });
 
   let questionIndex = 0; // Initialize question index
 
   return (
-    <div className="flex justify-center items-start min-h-screen p-4 bg-gray-100">
-      <div className="w-full max-w-4xl bg-white shadow-sm rounded-lg p-6">
-        <div className="text-black font-serif text-base">
+    <div className="flex justify-center items-start min-h-screen p-4 bg-gray-100 font-Poppins">
+      <div className="w-full max-w-4xl bg-white shadow-sm rounded-lg p-6 font-Poppins">
+        <div className="text-black font-serif text-base font-Poppins">
           {faqs.map((item, index) => {
             if (item.type === 'header') {
               // Reset question index for each header
               questionIndex = 0;
               return (
-                <div key={index} className="mt-6 mb-4">
-                  <h2 className="text-2xl font-bold">{item.content}</h2>
+                <div key={index} className="mt-6 mb-4 font-Poppins">
+                  <h2 className="text-2xl font-bold font-Poppins">{item.content}</h2>
                 </div>
               );
             }
@@ -278,24 +282,24 @@ const Faq=()=> {
             // FAQ item rendering
             questionIndex++; // Increment question index for each question
             return (
-              <div key={index} className="mb-4">
+              <div key={index} className="mb-4 font-Poppins">
                 <div
-                  className="flex items-center cursor-pointer bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition-colors"
+                  className="flex items-center cursor-pointer bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition-colors font-Poppins"
                   onClick={() => handleToggle(index)}
                 >
-                  <span className="flex-1 font-bold text-lg">
+                  <span className="flex-1 font-bold text-lg font-Poppins">
                     {questionIndex}. {item.question}
                   </span>
-                  <span className="ml-2 bg-gray-300 p-1 rounded-full">
+                  <span className="ml-2 bg-gray-300 p-1 rounded-full font-Poppins">
                     {openIndex === index ? (
-                      <FaChevronUp className="text-gray-600" />
+                      <FaChevronUp className="text-gray-600 font-Poppins" />
                     ) : (
-                      <FaChevronDown className="text-gray-600" />
+                      <FaChevronDown className="text-gray-600 font-Poppins" />
                     )}
                   </span>
                 </div>
                 {openIndex === index && (
-                  <p className="font-normal text-left mt-2 text-base">
+                  <p className="font-normal text-left mt-2 text-base font-Poppins">
                     {item.answer}
                   </p>
                 )}
