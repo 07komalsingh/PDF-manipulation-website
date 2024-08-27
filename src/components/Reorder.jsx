@@ -107,8 +107,8 @@ const Reorder = () => {
   return (
     <div className="flex flex-col items-center justify-center pb-9 bg-[#F5F5F5]">
       {!file ? (
-        <div className="mb-4 ">
-          <h2 className="text-4xl font-semibold mb-16 text-center">
+        <div className="mt-8">
+          <h2 className="text-4xl font-semibold mb-12 text-center">
             Reorder PDF Pages
           </h2>
           <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">

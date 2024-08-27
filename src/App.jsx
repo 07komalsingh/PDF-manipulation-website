@@ -15,6 +15,7 @@ import CompressPDF from "./components/compressPdf";
 import TermCon from "./components/TermCon";
 import Privacy from "./components/Privacy";
 import FAQ from "./components/Faq";
+import Readpdf from './components/Readpdf'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/term-and-con" element={<TermCon />} />
         <Route path="/privacy" element={<Privacy/>} />
         <Route path="/faq" element={<FAQ/>} />
+        <Route path="/read" element={<Readpdf/>}/>
       </Routes>
       <Footer />
     </Router>

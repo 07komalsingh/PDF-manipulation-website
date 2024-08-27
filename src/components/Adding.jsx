@@ -95,7 +95,7 @@ const Adding = () => {
     <div className="flex flex-col items-center mt-5 pb-14 bg-[#F5F5F5]">
       {selectedFiles.length < 1 ? (
         <div className="mb-4">
-          <h2 className="text-4xl font-semibold mb-16 text-center">Merge PDF Files</h2>
+          <h2 className="text-4xl font-semibold mb-14 text-center">Merge PDF Files</h2>
           <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">Upload Document</h2>
           <div className="bg-gradient-to-r bg-[#E0F2F3B8] border-2 border-[#44B7BC] text-white rounded-2xl xl:w-[70rem] lg:w-[50rem] px-3 md:w-[35rem] h-[23rem] flex justify-center items-center shadow-lg">
             <div>

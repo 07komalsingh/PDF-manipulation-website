@@ -52,7 +52,7 @@ const Navbar = () => {
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
             <div className="container lg:justify-around justify-between flex items-center px-6 space-x-6 lg:w-[100vw]">
-                <img src={pdfIcon} alt="PDF Icon" className="w-20 h-16"/>
+                <a href='https://easydocoments.com/'><img src={pdfIcon} alt="PDF Icon" className="w-20 h-16"/></a>
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold ">
                     <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link>
                     <button onClick={() => handleNavigation('/file', '/split')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
