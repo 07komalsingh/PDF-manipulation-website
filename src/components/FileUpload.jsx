@@ -27,9 +27,6 @@ const FileUpload = () => {
         case "/add_blank":
           toolName = "Add Blank Page";
           break;
-        case "/compress":
-          toolName= "Compress PDF";
-          break;
           case "/read":
           toolName= "Read PDF";
           break;
