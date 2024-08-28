@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { DndContext } from "@dnd-kit/core";
 import group from "../assets/img_gup.png";
 import { pdfjs } from "react-pdf";
@@ -9,7 +9,12 @@ import DraggableImage from "./ImagePopup";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function AddImageTool() {
-  window. scrollTo({ top:0, behavior: 'auto' });
+  
+  useEffect(() => {
+    // Scroll to the top when the component is mounted
+    window.scrollTo(0, 0);
+  }, []); 
+
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfPages, setPdfPages] = useState({});
   const [selectedImages, setSelectedImages] = useState({}); // Multiple images per page
