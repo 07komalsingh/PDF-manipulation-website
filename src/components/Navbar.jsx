@@ -56,7 +56,7 @@ const Navbar = () => {
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold ">
                     <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link>
                     <button onClick={() => handleNavigation('/file', '/split')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
-                    <button onClick={() => handleNavigation('/file', '/compress')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</button>
+                    <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
                     <Link to="/convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>
                     <Link to="/all-tools" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">All PDF Tools</Link>
                 </div>
@@ -100,7 +100,7 @@ const Navbar = () => {
                 <div className="md:hidden">
                     <Link to="/merge" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Merge PDF</Link>
                     <button onClick={() => { handleNavigation('/file', '/split'); toggleMenu(); }} className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
-                    <button onClick={() => { handleNavigation('/file', '/compress'); toggleMenu(); }} className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</button>
+                    <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
                     <Link to="/convert" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>Convert PDF</Link>
                     <Link to="/all-tools" className="block text-gray-700 hover:bg-[#44B7BC] py-2 px-4 rounded-lg" onClick={toggleMenu}>All PDF Tools</Link>
                     {user ? (
