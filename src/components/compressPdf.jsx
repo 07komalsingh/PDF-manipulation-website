@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -11,14 +11,14 @@ import ValidatedFileInput from "./ValidatedFileInput"; // Import the ValidatedFi
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 function Compresspdf() {
-    useEffect(() => {
-        // Scroll to the top when the component is mounted
-        window.scrollTo(0, 0);
-      }, []);
+  useEffect(() => {
+    // Scroll to the top when the component is mounted
+    window.scrollTo(0, 0);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
-  const [fileDataURL, setFileDataURL] = useState(null); 
+  const [fileDataURL, setFileDataURL] = useState(null);
   const [numPages, setNumPages] = useState(null);
   const [downloadUrl, setDownloadUrl] = useState(null);
 
@@ -34,7 +34,6 @@ function Compresspdf() {
   };
 
   const handleUpload = async () => {
-    
     if (!file) {
       setError("Please select a file first.");
       return;
@@ -55,7 +54,7 @@ function Compresspdf() {
           responseType: "blob",
         }
       );
-      debugger
+      debugger;
       const url = window.URL.createObjectURL(new Blob([response.data]));
       setDownloadUrl(url);
 
@@ -78,7 +77,7 @@ function Compresspdf() {
       {!file ? (
         <div className="mb-4">
           <h2 className="text-4xl font-semibold mb-16 p-0 mt-6 text-center">
-           compress pdf
+            compress pdf
           </h2>
           <h2 className="text-2xl font-semibold font-poppins mb-5 text-center">
             Upload Document
@@ -97,7 +96,8 @@ function Compresspdf() {
                     className="h-20 mt-4 w-full md:w-auto"
                   />
                 </div>
-                <ValidatedFileInput onFilesSelected={handleFileSelected} /> {/* Use ValidatedFileInput here */}
+                <ValidatedFileInput onFilesSelected={handleFileSelected} />{" "}
+                {/* Use ValidatedFileInput here */}
                 <div className="flex flex-col text-gray-600 mt-[1rem] font-poppins">
                   <h1 className="text-2xl">Choose your PDF file here</h1>
                 </div>

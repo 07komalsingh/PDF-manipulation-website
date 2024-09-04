@@ -1,24 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import add_page from '../assets/img_add.png';
-import img_merge from '../assets/img_merge.png';
+
+
 import img_split from '../assets/img_split.png';
 import img_recorder from '../assets/img_recorder.png';
 import img_remove from '../assets/img_remove.png';
 import img_blankPage from '../assets/img_blank_page.png';
-import img_convert from '../assets/img_convert.png';
 
 
 const tools = [
-    { name: 'Read PDF', icon: img_remove, path: '/file', toolPath: '/read' },
-    { name: 'Merge PDF', icon: img_merge, path: '/merge' },
+    
+
     { name: 'Split PDF', icon: img_split, path: '/file', toolPath: '/split' },
     { name: 'Reorder PDF', icon: img_recorder, path: '/reorder'},
     { name: 'Remove Pages', icon: img_remove, path: '/file', toolPath: '/remove' },
     { name: 'Add Blank Page', icon: img_blankPage, path: '/file', toolPath: '/add_blank' },
-    { name: 'PDF to Docs', icon: img_convert, path: '/convert' },
-    { name: 'Add Signature', icon: add_page, path: '/add-signature' },
-    { name: 'Compress PDF', icon: img_remove, path: '/compress'  },
+    
 ];
  
 function Tools() {

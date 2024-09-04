@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import pdfIcon from '../assets/logo_easy.svg';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithGoogle, auth } from './firebase';
-import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -52,9 +43,9 @@ const Navbar = () => {
     return (
         <div className="sticky top-0 bg-white shadow-md z-50 py-6">
             <div className="container lg:justify-around justify-between flex items-center px-6 space-x-6 lg:w-[100vw]">
-                <a href='https://easydocoments.com/'><img src={pdfIcon} alt="PDF Icon" className="w-20 h-16"/></a>
+                
                 <div className="hidden md:flex font-poppins space-x-6 font-semibold ">
-                    <Link to="/merge" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Merge PDF</Link>
+                    
                     <button onClick={() => handleNavigation('/file', '/split')} className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Split PDF</button>
                     <Link to="/compress" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Compress PDF</Link>
                     <Link to="/convert" className="text-gray-700 hover:text-[#44B7BC] py-2 px-4 rounded-lg">Convert PDF</Link>

@@ -15,10 +15,10 @@ const PlayStore = () => {
           </h2>
           <div className='lg:w-[30vw] w-full'>
             <p className="text-black text-xl mt-[3rem] mb-[3rem] leading-8 px-3 font-Poppins font-semibold">
-            Easy Docoments App: Available on Play Store
-            Manage your documents effortlessly with Easy Docoments. Download it now from the Play Store!
+           PDF Manipulation App: Available on Play Store
+            Manage your documents effortlessly with PDF Manipulation. Download it now from the Play Store!
             </p>
-           <a href="https://play.google.com/store/apps/details?id=com.pando.easydocuments" target="_blank">
+           <a href="" target="_blank">
             <button className="bg-[#44B7BC] hover:bg-[#30aab1] text-white text-24 text-center font-semibold  w-56 h-10 rounded-full font-Poppins ">Download</button>
             </a>
           </div>
